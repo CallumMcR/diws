@@ -21,29 +21,29 @@ function Navigation() {
                             <div className="align-middle h-100 d-flex align-items-center
                     justify-content-center">
                                 <ul className="navbar-nav h-100 d-flex align-items-center">
-                                    <lis className="nav-item h-100 d-flex align-items-center px-2 fs-5">
+                                    <li className="nav-item h-100 d-flex align-items-center px-2 fs-5">
                                         <NavLink style={{ color: "white" }} className="nav-link" to="/">
                                             HOME
                                         </NavLink>
-                                    </lis>
+                                    </li>
 
-                                    <lis className="nav-item h-100 d-flex align-items-center px-2 fs-5">
+                                    <li className="nav-item h-100 d-flex align-items-center px-2 fs-5">
                                         <NavLink style={{ color: "white" }} className="nav-link" to="/about">
                                             ABOUT
                                         </NavLink>
-                                    </lis>
+                                    </li>
 
-                                    <lis className="nav-item h-100 d-flex align-items-center px-2 fs-5">
+                                    <li className="nav-item h-100 d-flex align-items-center px-2 fs-5">
                                         <NavLink style={{ color: "white" }} className="nav-link" to="/recipes">
                                             RECIPES
                                         </NavLink>
-                                    </lis>
+                                    </li>
 
-                                    <lis className="nav-item h-100 d-flex align-items-center px-2 fs-5">
+                                    <li className="nav-item h-100 d-flex align-items-center px-2 fs-5">
                                         <NavLink style={{ color: "white" }} className="nav-link" to="/contact">
                                             CONTACT
                                         </NavLink>
-                                    </lis>
+                                    </li>
                                 </ul>
 
 
@@ -52,7 +52,7 @@ function Navigation() {
                         <div className="col-lg-4">
                             <div className="collapse navbar-collapse align-middle h-100 d-flex align-items-center justify-content-center">
                                 <ul className="navbar-nav h-100 d-flex align-items-center">
-                                    <lis className="nav-item h-100 d-flex align-items-center">
+                                    <li className="nav-item h-100 d-flex align-items-center">
                                         <NavLink to="www.google.com" className="btn" style={{ color: "white" }}>
                                             <span><i className="bi bi-facebook"></i></span>
                                         </NavLink>
@@ -64,7 +64,7 @@ function Navigation() {
                                         <NavLink to="www.google.com" className="btn" style={{ color: "white" }}>
                                             <span><i className="bi bi-pinterest"></i></span>
                                         </NavLink>
-                                    </lis>
+                                    </li>
                                 </ul>
                                 <div className="h-100 px-2 d-flex align-items-center">
                                     <input className="form-control" type="search"
