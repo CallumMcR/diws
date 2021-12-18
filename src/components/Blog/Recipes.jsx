@@ -112,7 +112,9 @@ class Recipes extends React.Component {
 
                               <div className="row">
                                 <div className="col-8">
-                                  <h5 className="card-title text-start" style={{ color: "#ff80c4" }}>{recipe.name}
+                                  <h5 className="card-title text-start" style={{ color: "#ff80c4" }}>
+                                    {recipe.name.length <=16 ? `${recipe.name}` :
+                                    `${recipe.name.substring(0,13)}...`}
                                   </h5>
                                 </div>
                                 <div className="col-4">
