@@ -2,7 +2,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-function Blog() {
+function Recipes() {
   return (
     <div className="home">
       <div class="text-dark p-5 text-center" style={{ backgroundColor: "whitesmoke" }}>
@@ -148,4 +148,4 @@ function Blog() {
   );
 }
 
-export default Blog;
+export default Recipes;
