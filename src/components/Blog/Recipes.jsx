@@ -6,7 +6,7 @@ import Form from "./Form.js";
 import RecipesList from "./RecipesList.js";
 
 
-
+const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 
 class Recipes extends React.Component {
 
@@ -17,14 +17,14 @@ class Recipes extends React.Component {
   searchedRecipe = "";
 
 
-
+  
 
   getRecipe = async (userInput) => {
 
     const recipeSearch = userInput.target.elements.recipeSearch.value;
-    userInput.preventDefault();
+    //userInput.preventDefault(); // Check if this now allows the recipes to display
     this.searchedRecipe = recipeSearch;
-    const response = await fetch(`https://get-baking-recipes-api.free.beeceptor.com/recipes`);
+    const response = await fetch(apiURL);
     const data = await response.json();
     this.setState({ recipes: data.recipes })
   }
