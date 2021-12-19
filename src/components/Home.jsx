@@ -14,14 +14,14 @@ function Home() {
                         <div className="col-lg-9 p-2">
                             <div className="px-5">
                                 <h1 className="pb-3">Who is Get Baking?</h1>
-                                <p1 className="fs-5 text-center">
+                                <p className="fs-5 text-start">
                                     We are a small group of people who have a passion and love for food,
                                     with my grandparents originally founding a little baking store with the name of Get Baking, I then
                                     took it over and have recently decided to move to an online platform where I can spread the love of my
                                     food, as well as allow everyone, and anyone to taste and experience
                                     the delightful recipes my grandparents managed to develop, as well as share our families recipes that have
                                     been exclusive to this family for generations!
-                                </p1>
+                                </p>
                                 <div className="row d-flex fs-5 py-5">
                                     Get Baking strives to provide you with a unique taste in your mouth that you will find no where else!
                                     Ranging from seasonal recipes to our families very own traditional recipes, originating from our roots
@@ -39,12 +39,12 @@ function Home() {
                             <Logo className="img-fluid"style={{width:"60%"}}/>
                             
                             <h1>Why get Baking?</h1>
-                            <p1 className="fs-5 text-center">
+                            <p className="fs-5 text-center">
                                 Founded in 1985 by my grandparents, then taken over by me in 2005, I decided to
                                 continue to spread
                                 their love of food, reaching further out, allowing for the world to taste and experience their amazing
                                 recipes!
-                            </p1>
+                            </p>
 
                         </div>
                     </div>
