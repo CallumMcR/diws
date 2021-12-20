@@ -1,12 +1,14 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Form from "./Form.js";
-import RecipesList from "./RecipesList.js";
+//import RecipesList from "./RecipesList.js";
 
 
 const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
+
+
 
 class Recipes extends React.Component {
 
@@ -17,23 +19,26 @@ class Recipes extends React.Component {
   searchedRecipe = "";
 
 
-  
-
   getRecipe = async (userInput) => {
 
     const recipeSearch = userInput.target.elements.recipeSearch.value;
-    //userInput.preventDefault(); // Check if this now allows the recipes to display
+    userInput.preventDefault(); // Check if this now allows the recipes to display
     this.searchedRecipe = recipeSearch;
     const response = await fetch(apiURL);
     const data = await response.json();
     this.setState({ recipes: data.recipes })
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const json = localStorage.getItem("recipes");
     if (json) {
       const recipes = JSON.parse(json);
       this.setState({ recipes: recipes });
+    }
+    else { // If the data is not already locally stored, then get it to display it
+      const responseForAllRecipes = await fetch(apiURL);
+      const dataForAllRecipes = await responseForAllRecipes.json();
+      this.setState({ recipes: dataForAllRecipes.recipes });
     }
 
   }
@@ -42,9 +47,13 @@ class Recipes extends React.Component {
     const recipes = JSON.stringify(this.state.recipes);
     localStorage.setItem("recipes", recipes);
   }
+
+
+
   render() {
     return (
       <div className="home">
+
         <div className="text-dark p-5 text-center" style={{ backgroundColor: "whitesmoke" }}>
           <div className="container-fluid d-flex-row rounded" style={{ backgroundColor: "white" }}>
             <div className="row py-3">
