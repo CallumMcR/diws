@@ -1,14 +1,15 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import DatePicker from 'react-datepicker'
 import Form from "./Form.js";
-import Moment from 'moment';
 import moment from "moment";
+import Pagination from "./Pagination.js";
+import { useParams } from "react-router";
 
 
+const recipesPerPage = 3;
+const apiURL = `https://getbaking-api.free.beeceptor.com/recipes`
 
-const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 
 function getRecipeTime(cooktime, preptime) {
   var cookTimeHrs = moment(cooktime, ["hmm", "mm", "h"]).format("HH");
@@ -31,11 +32,16 @@ function getRecipeTime(cooktime, preptime) {
 }
 
 
+
+
+
 class Recipes extends React.Component {
 
 
   state = {
-    recipes: []
+    recipes: [],
+    currentRecipes: [],
+    currentPage: 1
   }
   searchedRecipe = "";
 
@@ -47,28 +53,35 @@ class Recipes extends React.Component {
     const response = await fetch(apiURL);
     const data = await response.json();
     this.setState({ recipes: data.recipes })
+    // Updates list of recipes to only be ones we show
   }
 
-  componentDidMount = async () => {
-    const json = localStorage.getItem("recipes");
-    if (json) {
-      const recipes = JSON.parse(json);
-      this.setState({ recipes: recipes });
-    }
-    else { // If the data is not already locally stored, then get it from the api
-      const responseForAllRecipes = await fetch(apiURL);
-      const dataForAllRecipes = await responseForAllRecipes.json();
-      this.setState({ recipes: dataForAllRecipes.recipes });
-    }
+  componentDidMount = async () => { // When its getting from api
+
+    const responseForAllRecipes = await fetch(apiURL);
+    const dataForAllRecipes = await responseForAllRecipes.json();
+    this.setState({ recipes: dataForAllRecipes.recipes });
+
+    
 
   }
 
-  componentDidUpdate = () => {
-    const recipes = JSON.stringify(this.state.recipes);
-    localStorage.setItem("recipes", recipes);
+
+  paginate = async () => {
+    this.setState(
+      { currentPage: (this.props.params).pageNumber }
+    )
   }
 
- 
+  componentDidUpdate = async()=>{
+    console.log("page "+this.state.currentPage);
+    const indexOfLastRecipe = this.state.currentPage * recipesPerPage; /// Fix this tomorrow
+    const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+    this.setState({ currentPage: (this.props.params).pageNumber });
+    this.setState(
+      { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
+    )
+  }
 
   render() {
     return (
@@ -134,7 +147,7 @@ class Recipes extends React.Component {
 
 
                 <div className="row py-3">
-                  {this.state.recipes.map((recipe) => {
+                  {this.state.currentRecipes.map((recipe) => {
                     const nameToLower = ((recipe.name).toString()).toLowerCase();
                     const searchToLower = (((this.searchedRecipe).toString()).toLowerCase());
                     if ((nameToLower).includes(searchToLower)) {
@@ -223,7 +236,10 @@ class Recipes extends React.Component {
 
                 </div>
 
-
+                <Pagination
+                  recipesPerPage={recipesPerPage}
+                  totalRecipes={this.state.recipes.length}
+                  paginate={this.paginate} />
               </div>
               <div className="col-2">
 
@@ -240,4 +256,9 @@ class Recipes extends React.Component {
 }
 
 
-export default Recipes;
+
+export default (props) => (
+  <Recipes
+    {...props}
+    params={useParams()} />
+);
