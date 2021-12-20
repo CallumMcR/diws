@@ -10,25 +10,23 @@ import moment from "moment";
 
 const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 
-function getRecipeTime(cooktime,preptime){
-  var cookTimeHrs =moment(cooktime,["hmm","mm","h"]).format("HH");
-  var cookTimeMins =moment(cooktime,["hmm","mm","h"]).format("mm");
-  var prepTimeHrs =moment(preptime,["hmm","mm","h"]).format("HH");
-  var prepTimeMins =moment(preptime,["hmm","mm","h"]).format("mm");
-  var totalHours = parseInt(cookTimeHrs)+parseInt(prepTimeHrs);
-  var totalMinutes = parseInt(cookTimeMins)+parseInt(prepTimeMins);
-  while(totalMinutes>60) // while totalminutes is greater than 60
+function getRecipeTime(cooktime, preptime) {
+  var cookTimeHrs = moment(cooktime, ["hmm", "mm", "h"]).format("HH");
+  var cookTimeMins = moment(cooktime, ["hmm", "mm", "h"]).format("mm");
+  var prepTimeHrs = moment(preptime, ["hmm", "mm", "h"]).format("HH");
+  var prepTimeMins = moment(preptime, ["hmm", "mm", "h"]).format("mm");
+  var totalHours = parseInt(cookTimeHrs) + parseInt(prepTimeHrs);
+  var totalMinutes = parseInt(cookTimeMins) + parseInt(prepTimeMins);
+  while (totalMinutes > 60) // while totalminutes is greater than 60
   {
-    totalMinutes-=60;
-    totalHours+=1;
+    totalMinutes -= 60;
+    totalHours += 1;
   }
-  if(totalHours>0)
-  {
-    return(totalHours+"hrs ");
+  if (totalHours > 0) {
+    return (totalHours + "hrs ");
   }
-  else
-  {
-    return(totalMinutes+"mins ");
+  else {
+    return (totalMinutes + "mins ");
   }
 
 }
@@ -40,7 +38,6 @@ class Recipes extends React.Component {
     recipes: []
   }
   searchedRecipe = "";
-
 
   getRecipe = async (userInput) => {
 
@@ -79,18 +76,18 @@ class Recipes extends React.Component {
 
         <div className="text-dark p-5 text-center" style={{ backgroundColor: "whitesmoke" }}>
           <div className="container-fluid d-flex-row rounded" style={{ backgroundColor: "white" }}>
-            <div className="row py-3">
+            <div className="row pt-3 align-items-center d-flex">
               <div className="col-3">
                 <div className="row">
-                  <div className="col-4">
+                  <div className="col-3">
 
                   </div>
-                  <div className="col-4">
+                  <div className="col-6">
                     <button className="text-center fw-normal fs-5 form-control" type="button">
                       Add recipe
                     </button>
                   </div>
-                  <div className="col-4">
+                  <div className="col-3">
 
                   </div>
                 </div>
@@ -153,7 +150,7 @@ class Recipes extends React.Component {
                               style={{
                                 width: "18rem",
                                 "backgroundImage": `url(${recipe.thumbnail}})`,
-                                backgroundPosition:"center",
+                                backgroundPosition: "center",
                                 backgroundSize: "cover"
                               }}>
                               <div className="py-5"></div>
@@ -169,17 +166,20 @@ class Recipes extends React.Component {
                                     </h5>
                                   </div>
                                   <div className="col-4">
-                                    <span className="text-end text-dark" 
-                                    style={{ fontSize: "80%" }}>
-                                    
-                                     {getRecipeTime(recipe.cooktime,recipe.preptime)}
-                                     <i
-                                      className="bi bi-alarm"></i></span>
-                                  </div>
-                                  
-                                </div>
-                                <div className="card-text text-dark fs-6 fw-light text-start">
+                                    <span className="text-end text-dark"
+                                      style={{ fontSize: "80%" }}>
 
+                                      {getRecipeTime(recipe.cooktime, recipe.preptime)}
+                                      <i
+                                        className="bi bi-alarm"></i></span>
+                                  </div>
+
+                                </div>
+
+                                <div className="card-text text-dark fs-6 fw-light text-start">
+                                  <div className="text-start" style={{fontSize:"75%",color:"blue"}}>
+                                    {recipe.author}
+                                  </div>
                                   <div className="pt-1" style={{ fontSize: "75%" }}>
                                     Cocoa powder, flour, whipped cream, eggs, chocolate sauce
                                   </div>
@@ -194,9 +194,7 @@ class Recipes extends React.Component {
                                       <i className="bi bi-star" style={{ color: "orange" }}></i>
                                       (389)
                                     </div>
-                                    <div className="col-4 text-end fs-6">
-                                      {recipe.author}
-                                    </div>
+
                                   </div>
 
 
@@ -208,7 +206,7 @@ class Recipes extends React.Component {
 
                             </button>
                           </Link>
-                          
+
                         </div>
 
 
