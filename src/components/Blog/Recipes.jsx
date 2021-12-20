@@ -129,7 +129,8 @@ class Recipes extends React.Component {
                             <button className="card btn btn-primary mx-auto"
                               style={{
                                 width: "18rem",
-                                "backgroundImage": `url(https://i.gyazo.com/de55784f14242dce6fec456af799be1f.jpg)`,
+                                "backgroundImage": `url(${recipe.thumbnail}})`,
+                                backgroundPosition:"center",
                                 backgroundSize: "cover"
                               }}>
                               <div className="py-5"></div>
