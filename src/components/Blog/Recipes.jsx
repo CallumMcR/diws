@@ -1,14 +1,37 @@
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import DatePicker from 'react-datepicker'
 import Form from "./Form.js";
-//import RecipesList from "./RecipesList.js";
+import Moment from 'moment';
+import moment from "moment";
+
 
 
 const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 
+function getRecipeTime(cooktime,preptime){
+  var cookTimeHrs =moment(cooktime,["hmm","mm","h"]).format("HH");
+  var cookTimeMins =moment(cooktime,["hmm","mm","h"]).format("mm");
+  var prepTimeHrs =moment(preptime,["hmm","mm","h"]).format("HH");
+  var prepTimeMins =moment(preptime,["hmm","mm","h"]).format("mm");
+  var totalHours = parseInt(cookTimeHrs)+parseInt(prepTimeHrs);
+  var totalMinutes = parseInt(cookTimeMins)+parseInt(prepTimeMins);
+  while(totalMinutes>60) // while totalminutes is greater than 60
+  {
+    totalMinutes-=60;
+    totalHours+=1;
+  }
+  if(totalHours>0)
+  {
+    return(totalHours+"hrs ");
+  }
+  else
+  {
+    return(totalMinutes+"mins ");
+  }
 
+}
 
 class Recipes extends React.Component {
 
@@ -146,9 +169,14 @@ class Recipes extends React.Component {
                                     </h5>
                                   </div>
                                   <div className="col-4">
-                                    <span className="text-end text-dark" style={{ fontSize: "80%" }}>4hrs <i
+                                    <span className="text-end text-dark" 
+                                    style={{ fontSize: "80%" }}>
+                                    
+                                     {getRecipeTime(recipe.cooktime,recipe.preptime)}
+                                     <i
                                       className="bi bi-alarm"></i></span>
                                   </div>
+                                  
                                 </div>
                                 <div className="card-text text-dark fs-6 fw-light text-start">
 
@@ -180,6 +208,7 @@ class Recipes extends React.Component {
 
                             </button>
                           </Link>
+                          
                         </div>
 
 
