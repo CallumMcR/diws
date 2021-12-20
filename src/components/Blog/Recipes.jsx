@@ -28,8 +28,8 @@ function getRecipeTime(cooktime, preptime) {
   else {
     return (totalMinutes + "mins ");
   }
-
 }
+
 
 class Recipes extends React.Component {
 
@@ -42,7 +42,7 @@ class Recipes extends React.Component {
   getRecipe = async (userInput) => {
 
     const recipeSearch = userInput.target.elements.recipeSearch.value;
-    userInput.preventDefault(); // Check if this now allows the recipes to display
+    userInput.preventDefault();
     this.searchedRecipe = recipeSearch;
     const response = await fetch(apiURL);
     const data = await response.json();
@@ -55,7 +55,7 @@ class Recipes extends React.Component {
       const recipes = JSON.parse(json);
       this.setState({ recipes: recipes });
     }
-    else { // If the data is not already locally stored, then get it to display it
+    else { // If the data is not already locally stored, then get it from the api
       const responseForAllRecipes = await fetch(apiURL);
       const dataForAllRecipes = await responseForAllRecipes.json();
       this.setState({ recipes: dataForAllRecipes.recipes });
@@ -68,7 +68,7 @@ class Recipes extends React.Component {
     localStorage.setItem("recipes", recipes);
   }
 
-
+ 
 
   render() {
     return (
@@ -83,7 +83,8 @@ class Recipes extends React.Component {
 
                   </div>
                   <div className="col-6">
-                    <button className="text-center fw-normal fs-5 form-control" type="button">
+                    <button className="text-center fw-normal fs-5 form-control"
+                      type="button">
                       Add recipe
                     </button>
                   </div>
@@ -177,7 +178,7 @@ class Recipes extends React.Component {
                                 </div>
 
                                 <div className="card-text text-dark fs-6 fw-light text-start">
-                                  <div className="text-start" style={{fontSize:"75%",color:"blue"}}>
+                                  <div className="text-start" style={{ fontSize: "75%", color: "blue" }}>
                                     {recipe.author}
                                   </div>
                                   <div className="pt-1" style={{ fontSize: "75%" }}>
@@ -186,14 +187,15 @@ class Recipes extends React.Component {
 
                                   <div className="row align-items-center pt-1">
 
-                                    <div className="col-8">
+                                    <div className="col-12">
                                       <i className="bi bi-star" style={{ color: "orange" }}></i>
                                       <i className="bi bi-star" style={{ color: "orange" }}></i>
                                       <i className="bi bi-star" style={{ color: "orange" }}></i>
                                       <i className="bi bi-star" style={{ color: "orange" }}></i>
                                       <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                      (389)
+                                      (300)
                                     </div>
+
 
                                   </div>
 
