@@ -8,7 +8,7 @@ import { useParams } from "react-router";
 import FilterButton from "./FilterButton.js";
 
 
-const recipesPerPage = 6;
+const recipesPerPage = 2;
 const apiURL = `https://getbakingapitest2.free.beeceptor.com/recipes`
 
 
@@ -71,6 +71,9 @@ class Recipes extends React.Component {
         ListOfRecipesWeFilterBy.push(recipe);
       }
     })
+    this.setState({ currentPage: 1 }); // Returns user to first page of recipes
+    this.setState({ prevPage: 1 });
+
     this.setState({ usingFilter: true });
     this.setState({ recipes: ListOfRecipesWeFilterBy });
     const indexOfLastRecipe = this.state.currentPage * recipesPerPage;
@@ -79,9 +82,7 @@ class Recipes extends React.Component {
     this.setState(
       { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
     )
-    this.setState({ currentPage: 1 }); // Returns user to first page of recipes
-    this.setState({ prevPage: 1 });
-
+    
   }
 
 
@@ -157,14 +158,15 @@ class Recipes extends React.Component {
     else if (filterType == "halloween") {
 
     }
+    this.setState({ currentPage: 1 });
+    this.setState({ prevPage: 1 });
     const indexOfLastRecipe = this.state.currentPage * recipesPerPage;
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
     this.setState({ currentPage: (this.props.params).pageNumber });
     this.setState(
       { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
     )
-    this.setState({ currentPage: 1 });
-    this.setState({ prevPage: 1 });
+    
   }
 
 
@@ -306,7 +308,8 @@ class Recipes extends React.Component {
                 <Pagination
                   recipesPerPage={recipesPerPage}
                   totalRecipes={this.state.recipes.length}
-                  paginate={this.paginate} />
+                  paginate={this.paginate}
+                  curPage={this.state.currentPage} />
               </div>
               <div className="col-2">
 
