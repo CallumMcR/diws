@@ -1,5 +1,5 @@
 import React from 'react';
-const Form = props => (
+const Form = props => ( 
     <form className="container-fluid" onSubmit={props.getRecipe}>
         <div className="input-group-addon align-items-center border row shadow-sm">
             <div className="col-9 input-group-addon" style={{ paddingLeft: "0px", paddingRight: "0px" }}>

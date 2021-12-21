@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Form from "./Form.js";
 import moment from "moment";
 import Pagination from "./Pagination.js";
@@ -8,7 +8,7 @@ import { useParams } from "react-router";
 
 
 const recipesPerPage = 3;
-const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
+const apiURL = `https://getbakingtestapi.free.beeceptor.com/recipes`
 
 
 function getRecipeTime(cooktime, preptime) {
@@ -34,35 +34,67 @@ function getRecipeTime(cooktime, preptime) {
 
 
 
-
 class Recipes extends React.Component {
 
 
   state = {
+    allRecipes:[],
     recipes: [],
     currentRecipes: [],
     currentPage: 1,
     prevPage: 1,
-    firstPageBoolean: true
+    firstPageBoolean: true,
+    usingFilter:false
   }
   searchedRecipe = "";
 
   getRecipe = async (userInput) => {
-
     const recipeSearch = userInput.target.elements.recipeSearch.value;
     userInput.preventDefault();
     this.searchedRecipe = recipeSearch;
     const response = await fetch(apiURL);
     const data = await response.json();
-    this.setState({ currentRecipes: data.recipes })
-    // Updates list of recipes to only be ones we show
-  }
+    this.setState({ allRecipes: data.recipes }) // Get all recipes
+    const ListOfRecipesWeFilterBy = [];
+    this.setState({recipes:[]}); // Ensure we are not going to be adding recipes to an already
+    // existing recipes list
+
+    // Now we filter the data to get only the recipes we want
+    this.state.allRecipes.forEach(recipe => {
+      const nameToLower = ((recipe.name).toString()).toLowerCase();
+      const searchToLower = (((this.searchedRecipe).toString()).toLowerCase());
+      
+      if ((nameToLower).includes(searchToLower)) {
+        ListOfRecipesWeFilterBy.push(recipe);
+      }
+    })
+    this.setState({usingFilter:true});
+    this.setState({recipes:ListOfRecipesWeFilterBy});
+    console.log("Filtered ones"+this.state.recipes);
+    console.log("Original all recipes"+ this.state.allRecipes);
+
+    const indexOfLastRecipe = this.state.currentPage * recipesPerPage;
+    const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+    this.setState({ currentPage: (this.props.params).pageNumber });
+    this.setState(
+      { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
+    )
+
+
+  }// Works as expected
+  
 
   componentDidMount = async () => { // When its getting from api
-    const responseForAllRecipes = await fetch(apiURL);
-    const dataForAllRecipes = await responseForAllRecipes.json();
-    this.setState({ recipes: dataForAllRecipes.recipes });
-    const indexOfLastRecipe = this.state.currentPage * recipesPerPage; /// Fix this tomorrow
+    if(this.state.usingFilter==false)
+    {
+      
+      const responseForAllRecipes = await fetch(apiURL);
+      const dataForAllRecipes = await responseForAllRecipes.json();
+      this.setState({ recipes: dataForAllRecipes.recipes });
+      console.log("Made it to did mount");
+    }
+    
+    const indexOfLastRecipe = this.state.currentPage * recipesPerPage;
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
     this.setState({ currentPage: (this.props.params).pageNumber });
     this.setState(
@@ -71,31 +103,32 @@ class Recipes extends React.Component {
   }
 
 
-  paginate = async () => {
-    this.setState({prevPage:this.state.currentPage});
+  paginate = () => {
+    this.setState({ prevPage: this.state.currentPage });
     this.setState(
       { currentPage: (this.props.params).pageNumber }
     )
   }
 
   componentDidUpdate = async () => {
-    const indexOfLastRecipe = this.state.currentPage * recipesPerPage; /// Fix this tomorrow
+    const indexOfLastRecipe = this.state.currentPage * recipesPerPage;
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
-    if (this.state.currentPage == this.state.prevPage && this.state.currentPage !=1) {
+
+    if (this.state.currentPage == this.state.prevPage && this.state.currentPage != 1) {
       this.setState({ currentPage: (this.props.params).pageNumber });
       this.setState(
         { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
       )
-      this.setState({firstPageBoolean: true});
+      this.setState({ firstPageBoolean: true });
     }
-    else if(this.state.currentPage == 1 && this.state.prevPage==1 && 
-      this.state.firstPageBoolean ==true){
+    else if (this.state.currentPage == 1 && this.state.prevPage == 1 &&
+      this.state.firstPageBoolean == true) {
 
       this.setState({ currentPage: (this.props.params).pageNumber });
       this.setState(
         { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
       )
-        this.setState({firstPageBoolean:false});
+      this.setState({ firstPageBoolean: false });
     }
 
   }
@@ -165,9 +198,6 @@ class Recipes extends React.Component {
 
                 <div className="row py-3">
                   {this.state.currentRecipes.map((recipe) => {
-                    const nameToLower = ((recipe.name).toString()).toLowerCase();
-                    const searchToLower = (((this.searchedRecipe).toString()).toLowerCase());
-                    if ((nameToLower).includes(searchToLower)) {
                       return (
 
 
@@ -244,8 +274,6 @@ class Recipes extends React.Component {
 
 
                       )
-
-                    }
 
 
 
