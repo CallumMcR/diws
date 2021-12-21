@@ -79,9 +79,10 @@ class Recipes extends React.Component {
     this.setState(
       { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
     )
+    this.setState({currentPage:1}); // Returns user to first page of recipes
+    this.setState({prevPage:1});
 
-
-  }// Works as expected
+  }
   
 
   componentDidMount = async () => { // When its getting from api
