@@ -8,6 +8,11 @@ import { useParams } from "react-router";
 import FilterButton from "./FilterButton.js";
 
 
+
+// Current bugs:
+// 1. Switching pages when using filters returns to list all recipes
+// Check if did mount is causing the bug as its the only place using allrecipes
+
 const recipesPerPage = 2;
 const apiURL = `https://getbakingapitest2.free.beeceptor.com/recipes`
 
