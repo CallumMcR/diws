@@ -5,10 +5,11 @@ import Form from "./Form.js";
 import moment from "moment";
 import Pagination from "./Pagination.js";
 import { useParams } from "react-router";
+import FilterButton from "./FilterButton.js";
 
 
-const recipesPerPage = 3;
-const apiURL = `https://getbakingtestapi.free.beeceptor.com/recipes`
+const recipesPerPage = 6;
+const apiURL = `https://getbakingapitest2.free.beeceptor.com/recipes`
 
 
 function getRecipeTime(cooktime, preptime) {
@@ -38,13 +39,15 @@ class Recipes extends React.Component {
 
 
   state = {
-    allRecipes:[],
-    recipes: [],
-    currentRecipes: [],
+    allRecipes: [], // This contains all the recipes received from the api
+    recipes: [], // This contains all the recipes that have been filtered out, or not
+    // if no filter was used
+    currentRecipes: [], // This contains the recipes to be displayed per page
     currentPage: 1,
     prevPage: 1,
-    firstPageBoolean: true,
-    usingFilter:false
+    firstPageBoolean: true, // This is to prevent the update componenent from infinite looping
+    usingFilter: false // Used to check if we need to call the api. Essentially if
+    // this is the first time the page as been loaded
   }
   searchedRecipe = "";
 
@@ -56,45 +59,39 @@ class Recipes extends React.Component {
     const data = await response.json();
     this.setState({ allRecipes: data.recipes }) // Get all recipes
     const ListOfRecipesWeFilterBy = [];
-    this.setState({recipes:[]}); // Ensure we are not going to be adding recipes to an already
+    this.setState({ recipes: [] }); // Ensure we are not going to be adding recipes to an already
     // existing recipes list
 
     // Now we filter the data to get only the recipes we want
     this.state.allRecipes.forEach(recipe => {
       const nameToLower = ((recipe.name).toString()).toLowerCase();
       const searchToLower = (((this.searchedRecipe).toString()).toLowerCase());
-      
+
       if ((nameToLower).includes(searchToLower)) {
         ListOfRecipesWeFilterBy.push(recipe);
       }
     })
-    this.setState({usingFilter:true});
-    this.setState({recipes:ListOfRecipesWeFilterBy});
-    console.log("Filtered ones"+this.state.recipes);
-    console.log("Original all recipes"+ this.state.allRecipes);
-
+    this.setState({ usingFilter: true });
+    this.setState({ recipes: ListOfRecipesWeFilterBy });
     const indexOfLastRecipe = this.state.currentPage * recipesPerPage;
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
     this.setState({ currentPage: (this.props.params).pageNumber });
     this.setState(
       { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
     )
-    this.setState({currentPage:1}); // Returns user to first page of recipes
-    this.setState({prevPage:1});
+    this.setState({ currentPage: 1 }); // Returns user to first page of recipes
+    this.setState({ prevPage: 1 });
 
   }
-  
+
 
   componentDidMount = async () => { // When its getting from api
-    if(this.state.usingFilter==false)
-    {
-      
+    if (this.state.usingFilter == false) {
       const responseForAllRecipes = await fetch(apiURL);
       const dataForAllRecipes = await responseForAllRecipes.json();
       this.setState({ recipes: dataForAllRecipes.recipes });
-      console.log("Made it to did mount");
     }
-    
+
     const indexOfLastRecipe = this.state.currentPage * recipesPerPage;
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
     this.setState({ currentPage: (this.props.params).pageNumber });
@@ -134,6 +131,43 @@ class Recipes extends React.Component {
 
   }
 
+
+  getRecipeByFilter = async (filterType) => {
+    console.log(filterType);
+    if (filterType == "mostPopular") {
+      // ? 1:-1 flips the sort so we get it with highest first
+      // sort by recipes so we keep applied filter
+      this.setState({
+        recipes:
+          (this.state.recipes).sort((a, b) => a.numberOfRatings < b.numberOfRatings ? 1 : -1)
+      });
+    }
+    else if (filterType == "recent") {
+      this.setState({
+        recipes:
+          (this.state.recipes).sort((a, b) => moment(a.created).format() < moment(b.created).format() ? 1:-1)
+      });
+    }
+    else if (filterType == "xmas") {
+
+    }
+    else if (filterType == "easter") {
+
+    }
+    else if (filterType == "halloween") {
+
+    }
+    const indexOfLastRecipe = this.state.currentPage * recipesPerPage;
+    const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+    this.setState({ currentPage: (this.props.params).pageNumber });
+    this.setState(
+      { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
+    )
+    this.setState({ currentPage: 1 });
+    this.setState({ prevPage: 1 });
+  }
+
+
   render() {
     return (
       <div className="home">
@@ -167,20 +201,7 @@ class Recipes extends React.Component {
 
                   </div>
                   <div className="col-6">
-                    <div className="dropdown container-fluid">
-                      <button className="form-control dropdown-toggle rounded-0 shadow-sm" type="button"
-                        id="recipeFiltrationButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        Filter
-                      </button>
-                      <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="recipeFiltrationButton">
-                        <li><a className="dropdown-item">Most popular</a></li>
-                        <li><a className="dropdown-item">Most recent</a></li>
-                        <li><a className="dropdown-item">Christmas Recipes</a></li>
-                        <li><a className="dropdown-item">Easter Recipes</a></li>
-                        <li><a className="dropdown-item">Halloween Recipes</a></li>
-
-                      </ul>
-                    </div>
+                    <FilterButton getRecipeByFilter={this.getRecipeByFilter} />
                   </div>
                   <div className="col-3">
 
@@ -199,82 +220,82 @@ class Recipes extends React.Component {
 
                 <div className="row py-3">
                   {this.state.currentRecipes.map((recipe) => {
-                      return (
+                    return (
 
 
-                        <div className="col-4 d-flex py-2" key={recipe.id}>
-                          <Link style={{ textDecoration: 'none' }}
-                            to={{
-                              pathname: `recipe/${recipe.id}`,
-                              state: { recipe: recipe.id }
+                      <div className="col-4 d-flex py-2" key={recipe.id}>
+                        <Link style={{ textDecoration: 'none' }}
+                          to={{
+                            pathname: `recipe/${recipe.id}`,
+                            state: { recipe: recipe.id }
+                          }}>
+                          <button className="card btn btn-primary mx-auto"
+                            style={{
+                              width: "18rem",
+                              "backgroundImage": `url(${recipe.thumbnail}})`,
+                              backgroundPosition: "center",
+                              backgroundSize: "cover"
                             }}>
-                            <button className="card btn btn-primary mx-auto"
-                              style={{
-                                width: "18rem",
-                                "backgroundImage": `url(${recipe.thumbnail}})`,
-                                backgroundPosition: "center",
-                                backgroundSize: "cover"
-                              }}>
-                              <div className="py-5"></div>
-                              <div className="py-5"></div>
-                              <div className="card-body align-middle container-fluid rounded"
-                                style={{ backgroundColor: "white", opacity: "0.9" }}>
+                            <div className="py-5"></div>
+                            <div className="py-5"></div>
+                            <div className="card-body align-middle container-fluid rounded"
+                              style={{ backgroundColor: "white", opacity: "0.9" }}>
 
-                                <div className="row">
-                                  <div className="col-8">
-                                    <h5 className="card-title text-start" style={{ color: "#ff80c4" }}>
-                                      {recipe.name.length <= 15 ? `${recipe.name}` :
-                                        `${recipe.name.substring(0, 13)}...`}
-                                    </h5>
-                                  </div>
-                                  <div className="col-4">
-                                    <span className="text-end text-dark"
-                                      style={{ fontSize: "80%" }}>
+                              <div className="row">
+                                <div className="col-8">
+                                  <h5 className="card-title text-start" style={{ color: "#ff80c4" }}>
+                                    {recipe.name.length <= 15 ? `${recipe.name}` :
+                                      `${recipe.name.substring(0, 13)}...`}
+                                  </h5>
+                                </div>
+                                <div className="col-4">
+                                  <span className="text-end text-dark"
+                                    style={{ fontSize: "80%" }}>
 
-                                      {getRecipeTime(recipe.cooktime, recipe.preptime)}
-                                      <i
-                                        className="bi bi-alarm"></i></span>
+                                    {getRecipeTime(recipe.cooktime, recipe.preptime)}
+                                    <i
+                                      className="bi bi-alarm"></i></span>
+                                </div>
+
+                              </div>
+
+                              <div className="card-text text-dark fs-6 fw-light text-start">
+                                <div className="text-start" style={{ fontSize: "75%", color: "blue" }}>
+                                  {recipe.author}
+                                </div>
+                                <div className="pt-1" style={{ fontSize: "75%" }}>
+                                  Cocoa powder, flour, whipped cream, eggs, chocolate sauce
+                                </div>
+
+                                <div className="row align-items-center pt-1">
+
+                                  <div className="col-12">
+                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
+                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
+                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
+                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
+                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
+                                    ({recipe.numberOfRatings})
                                   </div>
+
 
                                 </div>
 
-                                <div className="card-text text-dark fs-6 fw-light text-start">
-                                  <div className="text-start" style={{ fontSize: "75%", color: "blue" }}>
-                                    {recipe.author}
-                                  </div>
-                                  <div className="pt-1" style={{ fontSize: "75%" }}>
-                                    Cocoa powder, flour, whipped cream, eggs, chocolate sauce
-                                  </div>
-
-                                  <div className="row align-items-center pt-1">
-
-                                    <div className="col-12">
-                                      <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                      <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                      <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                      <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                      <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                      (300)
-                                    </div>
-
-
-                                  </div>
-
-
-
-                                </div>
 
 
                               </div>
 
-                            </button>
-                          </Link>
 
-                        </div>
+                            </div>
+
+                          </button>
+                        </Link>
+
+                      </div>
 
 
 
-                      )
+                    )
 
 
 
