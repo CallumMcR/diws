@@ -41,7 +41,9 @@ class Recipes extends React.Component {
   state = {
     recipes: [],
     currentRecipes: [],
-    currentPage: 1
+    currentPage: 1,
+    prevPage: 1,
+    firstPageBoolean: true
   }
   searchedRecipe = "";
 
@@ -57,30 +59,47 @@ class Recipes extends React.Component {
   }
 
   componentDidMount = async () => { // When its getting from api
-
     const responseForAllRecipes = await fetch(apiURL);
     const dataForAllRecipes = await responseForAllRecipes.json();
     this.setState({ recipes: dataForAllRecipes.recipes });
-
-    
-
-  }
-
-
-  paginate = async () => {
-    this.setState(
-      { currentPage: (this.props.params).pageNumber }
-    )
-  }
-
-  componentDidUpdate = async()=>{
-    console.log("page "+this.state.currentPage);
     const indexOfLastRecipe = this.state.currentPage * recipesPerPage; /// Fix this tomorrow
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
     this.setState({ currentPage: (this.props.params).pageNumber });
     this.setState(
       { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
     )
+  }
+
+
+  paginate = async () => {
+    this.setState({prevPage:this.state.currentPage});
+    this.setState(
+      { currentPage: (this.props.params).pageNumber }
+    )
+  }
+
+  componentDidUpdate = async () => {
+    console.log("page current" + this.state.currentPage);
+    console.log("prev page "+ this.state.prevPage);
+    const indexOfLastRecipe = this.state.currentPage * recipesPerPage; /// Fix this tomorrow
+    const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+    if (this.state.currentPage == this.state.prevPage && this.state.currentPage !=1) {
+      this.setState({ currentPage: (this.props.params).pageNumber });
+      this.setState(
+        { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
+      )
+      this.setState({firstPageBoolean: true});
+    }
+    else if(this.state.currentPage == 1 && this.state.prevPage==1 && 
+      this.state.firstPageBoolean ==true){
+
+      this.setState({ currentPage: (this.props.params).pageNumber });
+      this.setState(
+        { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
+      )
+        this.setState({firstPageBoolean:false});
+    }
+
   }
 
   render() {
