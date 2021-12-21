@@ -8,7 +8,7 @@ import { useParams } from "react-router";
 
 
 const recipesPerPage = 3;
-const apiURL = `https://getbaking-api.free.beeceptor.com/recipes`
+const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 
 
 function getRecipeTime(cooktime, preptime) {
@@ -54,7 +54,7 @@ class Recipes extends React.Component {
     this.searchedRecipe = recipeSearch;
     const response = await fetch(apiURL);
     const data = await response.json();
-    this.setState({ recipes: data.recipes })
+    this.setState({ currentRecipes: data.recipes })
     // Updates list of recipes to only be ones we show
   }
 
@@ -79,8 +79,6 @@ class Recipes extends React.Component {
   }
 
   componentDidUpdate = async () => {
-    console.log("page current" + this.state.currentPage);
-    console.log("prev page "+ this.state.prevPage);
     const indexOfLastRecipe = this.state.currentPage * recipesPerPage; /// Fix this tomorrow
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
     if (this.state.currentPage == this.state.prevPage && this.state.currentPage !=1) {
