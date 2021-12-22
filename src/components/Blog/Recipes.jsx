@@ -38,6 +38,7 @@ function getRecipeTime(cooktime, preptime) {
 function Capitalize(str){
   return str.charAt(0).toUpperCase() + str.slice(1);
   }
+  
 function getListOfIngredients(recipe){
   var stringOfIngredients="";
   for(var i =0;i<recipe.ingredients.length;i++)
@@ -322,7 +323,7 @@ class Recipes extends React.Component {
                                 <div className="text-start" style={{ fontSize: "75%", color: "blue" }}>
                                   {recipe.author}
                                 </div>
-                                <div className="pt-1" style={{ fontSize: "75%" }}>
+                                <div className="pt-1" style={{ fontSize: "75%",height:"40px",overflow:"hidden" }}>
                                   {getListOfIngredients(recipe) <= 70 ? `${getListOfIngredients(recipe)}` :
                                       `${getListOfIngredients(recipe).substring(0, 67)}...`}
                                 </div>
