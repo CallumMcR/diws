@@ -12,8 +12,8 @@ import FilterButton from "./FilterButton.js";
 // 1. Switching pages when using filters returns to list all recipes
 // Problem is we are using href, so whole page is relkoading and re-setting variables
 
-const recipesPerPage = 2;
-const apiURL = `https://diws-backup-mod00.free.beeceptor.com/recipes`
+const recipesPerPage = 3;
+const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 
 
 function getRecipeTime(cooktime, preptime) {
@@ -35,8 +35,22 @@ function getRecipeTime(cooktime, preptime) {
     return (totalMinutes + "mins ");
   }
 }
-
-
+function Capitalize(str){
+  return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+function getListOfIngredients(recipe){
+  var stringOfIngredients="";
+  for(var i =0;i<recipe.ingredients.length;i++)
+  {
+    var capitalisedFirstChar = Capitalize(recipe.ingredients[i].ingredient);
+    stringOfIngredients+=capitalisedFirstChar;
+    if(i!=recipe.ingredients.length-1)
+    {
+      stringOfIngredients+=", "
+    }
+  }
+  return stringOfIngredients;
+}
 
 
 class Recipes extends React.Component {
@@ -93,7 +107,7 @@ class Recipes extends React.Component {
     if (this.state.usingFilter == false) {
       const responseForAllRecipes = await fetch(apiURL);
       const dataForAllRecipes = await responseForAllRecipes.json();
-      this.setState({allRecipes:dataForAllRecipes.recipes});
+      this.setState({ allRecipes: dataForAllRecipes.recipes });
       this.setState({ recipes: dataForAllRecipes.recipes });
       this.setState({ usingFilter: true }); // We only want to get all the data from the api once
       console.log("first conditional: " + this.state.usingFilter);
@@ -309,17 +323,18 @@ class Recipes extends React.Component {
                                   {recipe.author}
                                 </div>
                                 <div className="pt-1" style={{ fontSize: "75%" }}>
-                                  Cocoa powder, flour, whipped cream, eggs, chocolate sauce
+                                  {getListOfIngredients(recipe) <= 70 ? `${getListOfIngredients(recipe)}` :
+                                      `${getListOfIngredients(recipe).substring(0, 67)}...`}
                                 </div>
 
                                 <div className="row align-items-center pt-1">
 
                                   <div className="col-12">
-                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
-                                    <i className="bi bi-star" style={{ color: "orange" }}></i>
+                                    {recipe.stars >= 1 ? <i className="bi bi-star-fill" style={{ color: "orange" }}></i> : <i className="bi bi-star" style={{ color: "orange" }}></i>}
+                                    {recipe.stars >= 2 ? <i className="bi bi-star-fill" style={{ color: "orange" }}></i> : <i className="bi bi-star" style={{ color: "orange" }}></i>}
+                                    {recipe.stars >= 3 ? <i className="bi bi-star-fill" style={{ color: "orange" }}></i> : <i className="bi bi-star" style={{ color: "orange" }}></i>}
+                                    {recipe.stars >= 4 ? <i className="bi bi-star-fill" style={{ color: "orange" }}></i> : <i className="bi bi-star" style={{ color: "orange" }}></i>}
+                                    {recipe.stars >= 5 ? <i className="bi bi-star-fill" style={{ color: "orange" }}></i> : <i className="bi bi-star" style={{ color: "orange" }}></i>}
                                     ({recipe.numberOfRatings})
                                   </div>
 
