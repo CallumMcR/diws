@@ -93,6 +93,7 @@ class Recipes extends React.Component {
     if (this.state.usingFilter == false) {
       const responseForAllRecipes = await fetch(apiURL);
       const dataForAllRecipes = await responseForAllRecipes.json();
+      this.setState({allRecipes:dataForAllRecipes.recipes});
       this.setState({ recipes: dataForAllRecipes.recipes });
       this.setState({ usingFilter: true }); // We only want to get all the data from the api once
       console.log("first conditional: " + this.state.usingFilter);
@@ -110,7 +111,7 @@ class Recipes extends React.Component {
   paginate = (pageNumber) => {
     console.log("This is the pagenumber we recieved: " + pageNumber);
     this.setState({ prevPage: this.state.currentPage });
-    this.setState({ currentPage: pageNumber }, () => {                              
+    this.setState({ currentPage: pageNumber }, () => {
       //callback
       console.log(this.state.currentPage) // myname
     });
@@ -125,9 +126,9 @@ class Recipes extends React.Component {
       this.setState(
         { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
       )
-      this.setState({prevPage:this.state.currentPage});
+      this.setState({ prevPage: this.state.currentPage });
     }
-    console.log(this.state.currentPage +" prev page-> "+this.state.prevPage);
+    console.log(this.state.currentPage + " prev page-> " + this.state.prevPage);
     console.log("update");
 
   }
@@ -149,13 +150,55 @@ class Recipes extends React.Component {
       });
     }
     else if (filterType == "xmas") {
+      const xmasRecipes = [];
+      this.state.recipes.map((recipe) => {
+        var submit = false;
+        if (submit == false) { // If we dont need to submit continue to loop through each recipes category 
+          recipe.categories.map((category) => {
+            if (category == "Christmas") {
+              xmasRecipes.push(recipe);
+              submit = true;
+            }
+          });
+        }
 
+      });
+      this.setState({ recipes: xmasRecipes });
     }
     else if (filterType == "easter") {
+      const easterRecipes = [];
+      this.state.recipes.map((recipe) => {
+        var submit = false;
+        if (submit == false) { // If we dont need to submit continue to loop through each recipes category 
+          recipe.categories.map((category) => {
+            if (category == "Easter") {
+              easterRecipes.push(recipe);
+              submit = true;
+            }
+          });
+        }
 
+      });
+      this.setState({ recipes: easterRecipes });
     }
     else if (filterType == "halloween") {
+      const halloweenRecipes = [];
+      this.state.recipes.map((recipe) => {
+        var submit = false;
+        if (submit == false) { // If we dont need to submit continue to loop through each recipes category 
+          recipe.categories.map((category) => {
+            if (category == "Halloween") {
+              halloweenRecipes.push(recipe);
+              submit = true;
+            }
+          });
+        }
 
+      });
+      this.setState({ recipes: halloweenRecipes });
+    }
+    else if (filterType == "all") {
+      this.setState({ recipes: this.state.allRecipes });
     }
 
     const indexOfLastRecipe = this.state.currentPage * recipesPerPage;
@@ -165,7 +208,7 @@ class Recipes extends React.Component {
     )
     this.setState({ prevPage: 0 });
     this.setState({ currentPage: 1 });
-    
+
     console.log("filter");
   }
 

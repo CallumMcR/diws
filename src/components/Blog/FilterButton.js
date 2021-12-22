@@ -11,6 +11,13 @@ const FilterButton = ({ getRecipeByFilter }) => {
             </button>
             <ul className="dropdown-menu dropdown-menu-light" aria-labelledby="recipeFiltrationButton">
 
+                <li key="all"
+                    onClick={() => getRecipeByFilter("all")}>
+                    <a className="dropdown-item">
+                        Show all Recipes
+                    </a>
+                </li>
+
                 <li key="mostPopular"
                     onClick={() => getRecipeByFilter("mostPopular")}>
                     <a className="dropdown-item">
