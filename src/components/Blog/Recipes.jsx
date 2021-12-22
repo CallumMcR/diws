@@ -13,7 +13,7 @@ import FilterButton from "./FilterButton.js";
 // Problem is we are using href, so whole page is relkoading and re-setting variables
 
 const recipesPerPage = 3;
-const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
+const apiURL = `https://getbakingtestapi.free.beeceptor.com/recipes`
 
 
 function getRecipeTime(cooktime, preptime) {
@@ -283,7 +283,7 @@ class Recipes extends React.Component {
                     return (
 
 
-                      <div className="col-4 d-flex py-2" key={recipe.id}>
+                      <div className="col-xl-4 d-flex py-2" key={recipe.id}>
                         <Link style={{ textDecoration: 'none' }}
                           to={{
                             pathname: `recipe/${recipe.id}`,
