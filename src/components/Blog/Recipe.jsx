@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 
-
+function Capitalize(str){
+  return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 class Recipe extends React.Component {
 
   state = {
@@ -9,7 +11,8 @@ class Recipe extends React.Component {
     listOfInstructions: [],
     listOfSteps: [],
     listOfAdditionalInstructions: [],
-    listOfAdditionalSteps: []
+    listOfAdditionalSteps: [],
+    listOfIngredients: []
   }
 
 
@@ -22,12 +25,16 @@ class Recipe extends React.Component {
         this.setState({ activeRecipe: displayRecipe });
       }
     });
+
     this.setState({ listOfInstructions: this.state.activeRecipe.instructions });
     this.setState({ listOfSteps: this.state.listOfInstructions[0].steps });
+
     if (this.state.activeRecipe.secondaryinstructions.length > 0) {
       this.setState({ listOfAdditionalInstructions: this.state.activeRecipe.secondaryinstructions })
       this.setState({ listOfAdditionalSteps: this.state.listOfAdditionalInstructions[0].steps })
     }
+    this.setState({ listOfIngredients: this.state.activeRecipe.ingredients });
+
 
 
   }
@@ -187,7 +194,36 @@ class Recipe extends React.Component {
                           data-bs-parent="#accordionFlushIngredients">
 
                           <div className="accordion-body rounded">
-                            Example test
+                            <table className="table table-striped table-hover">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Ingredient</th>
+                                  <th scope="col">Measurement</th>
+                                  <th scope="col">Notes</th>
+
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                {this.state.listOfIngredients.map(ingredient => (
+                                  <tr key={ingredient.ingredient}>
+                                    <td>
+                                      {Capitalize(ingredient.ingredient)}
+                                    </td>
+                                    <td>
+                                      {ingredient.measurementweight && ingredient.measurementtype ? `${ingredient.measurementweight}${ingredient.measurementtype}` :
+                                        `${ingredient.measurementsize}`}
+                                    </td>
+
+
+
+                                    <th>{Capitalize(ingredient.note)}</th>
+                                  </tr>
+
+                                ))}
+
+                              </tbody>
+                            </table>
                           </div>
 
                         </div>
@@ -355,7 +391,7 @@ class Recipe extends React.Component {
 
                       <div className="col-4 text-center">
                         <div className="fw-bold text-center">
-                          Callum McRoyall
+                          {this.state.activeRecipe.author}
                         </div>
                       </div>
                       <div className="col-3">
