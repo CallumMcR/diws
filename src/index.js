@@ -21,7 +21,7 @@ ReactDOM.render(
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/recipes/page=:pageNumber" element={<Recipes />} />
+      <Route path="/recipes/" element={<Recipes />} />
       <Route path="recipes/recipe/:uuid" element={<Recipe />} />
     </Routes>
     <Footer />

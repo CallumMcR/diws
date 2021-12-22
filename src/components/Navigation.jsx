@@ -34,7 +34,7 @@ function Navigation() {
                                     </li>
 
                                     <li className="nav-item h-100 d-flex align-items-center px-2 fs-5">
-                                        <NavLink style={{ color: "white" }} className="nav-link" to="/recipes/page=1">
+                                        <NavLink style={{ color: "white" }} className="nav-link" to="/recipes/">
                                             RECIPES
                                         </NavLink>
                                     </li>
@@ -86,7 +86,7 @@ function Navigation() {
                         <button to="/about" className="btn px-5 col-3" style={{ color: "white" }}>
                             ABOUT
                         </button>
-                        <button to="/recipes/page=1" className="btn px-5 col-3" style={{ color: "white" }}>
+                        <button to="/recipes/" className="btn px-5 col-3" style={{ color: "white" }}>
                             RECIPES
                         </button>
                         <button to="/contact" className="btn px-5 col-3" style={{ color: "white" }}>

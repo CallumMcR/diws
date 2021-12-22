@@ -11,11 +11,11 @@ const Pagination = ({ recipesPerPage, totalRecipes,paginate,curPage }) => {
             <ul className="pagination">
                 {pageNumbers.map(number => (
                     <li key={number} className={number==curPage ? "page-item active": "page-item" }>
-                        <a 
-                        onClick={paginate} href={"/recipes/page="+number} 
+                        <button 
+                        onClick={()=> paginate(number)}
                         className="page-link">
                             {number}
-                        </a>
+                        </button>
                     </li>
                 ))}
             </ul>
