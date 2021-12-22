@@ -125,6 +125,7 @@ class Recipes extends React.Component {
       this.setState(
         { currentRecipes: this.state.recipes.slice(indexOfFirstRecipe, indexOfLastRecipe) }
       )
+      this.setState({prevPage:this.state.currentPage});
     }
     console.log(this.state.currentPage +" prev page-> "+this.state.prevPage);
     console.log("update");
