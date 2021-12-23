@@ -327,7 +327,7 @@ class Recipe extends React.Component {
                             <div className="py-3">
 
                             </div>
-                            {this.state.activeRecipe.secondaryinstructions > 0 &&
+                            {this.state.listOfAdditionalInstructions.length > 0 &&
                               <div>
                                 <div className="accordion-header" id="flush-heading2ndInstructions">
                                   <hr />
