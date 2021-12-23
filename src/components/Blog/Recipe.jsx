@@ -74,14 +74,14 @@ class Recipe extends React.Component {
 
                   
 
-                  <div className="rounded" style={{ objectfit: "cover" }}>
+                  <div className="rounded border" style={{ objectfit: "cover",backgroundColor:"#ffff80" }}>
 
                     <Carousel>
                       {this.state.listOfImages.map((image,index) => (
                         <Carousel.Item key={index}>
                           <img
                             className="rounded d-block w-100"
-                            style={{position:"center",objectFit:"contain", width:"32rem",height:"32rem"}}
+                            style={{position:"center",objectFit:"cover", width:"26rem",height:"26rem"}}
                             src={image}
                             alt="..."
                           />
