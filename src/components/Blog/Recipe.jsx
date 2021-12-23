@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { Carousel } from "react-bootstrap";
+import moment from "moment";
 
 function Capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
 class Recipe extends React.Component {
 
   state = {
@@ -14,13 +16,15 @@ class Recipe extends React.Component {
     listOfAdditionalInstructions: [],
     listOfAdditionalSteps: [],
     listOfIngredients: [],
-    listOfImages: []
-  }
+    listOfImages: [],
+    listOfNutrients: []
+  }// All the arrays in the active recipe are set as states, as otherwise
+  // The mapping will try to read the data before it has been mounted
 
 
   componentDidMount = async () => {
     const idNum = (this.props.params).uuid;
-    const req = await fetch(`https://getbakingapitest2.free.beeceptor.com/recipes`);
+    const req = await fetch(`https://get-baking-recipes-api.free.beeceptor.com/recipes`);
     const res = await req.json();
     res.recipes.forEach((displayRecipe) => {
       if (displayRecipe.id == idNum) {
@@ -37,6 +41,7 @@ class Recipe extends React.Component {
     }
     this.setState({ listOfIngredients: this.state.activeRecipe.ingredients });
     this.setState({ listOfImages: this.state.activeRecipe.images });
+    this.setState({ listOfNutrients: this.state.activeRecipe.nutrition });
 
   }
 
@@ -50,7 +55,9 @@ class Recipe extends React.Component {
           <div className="container-fluid row d-flex">
 
             <div className="col-lg-8 align-items-center rounded py-3" style={{ backgroundColour: "white" }}>
-              <h1>{this.state.activeRecipe.name}</h1>
+              <h1>
+                {this.state.activeRecipe.name}
+              </h1>
             </div>
 
             <div className="col-4 rounded py-3 d-none d-lg-block" style={{ backgroundColour: "white" }}>
@@ -72,25 +79,25 @@ class Recipe extends React.Component {
 
                 <div className="container-fluid">
 
-                  
 
-                  <div className="rounded border" style={{ objectfit: "cover",backgroundColor:"#ffff80" }}>
+
+                  <div className="rounded" style={{ objectfit: "cover" }}>
 
                     <Carousel>
-                      {this.state.listOfImages.map((image,index) => (
+                      {this.state.listOfImages.map((image, index) => (
                         <Carousel.Item key={index}>
                           <img
                             className="rounded d-block w-100"
-                            style={{position:"center",objectFit:"cover", width:"26rem",height:"26rem"}}
+                            style={{ position: "center", objectFit: "cover", width: "26rem", height: "26rem" }}
                             src={image}
                             alt="..."
                           />
-                          
+
                         </Carousel.Item>
                       ))}
                     </Carousel>
 
-               
+
 
                   </div>
 
@@ -106,9 +113,87 @@ class Recipe extends React.Component {
 
                   <div className="container-fluid border text-center border-top-0 rounded-bottom">
 
-                    <p className="container-fluid py-4 fs-5 text-center">
+                    <div className="row pt-2 fs-5 text-center">
+                      <div className="col-4">
+                        Preperation Time: {moment(this.state.activeRecipe.preptime, ["hmm", "mm", "h"]).format("HH:mm")}
+                      </div>
+                      <div className="col-4 fw-bold">
+                        Difficulty: {this.state.activeRecipe.difficulty}
+                      </div>
+                      <div className="col-4">
+                        Cook Time: {moment(this.state.activeRecipe.cooktime, ["hmm", "mm", "h"]).format("HH:mm")}
+                      </div>
+                    </div>
+
+                    <div className="pt-4 fs-5 text-center">
+                      Yields: {this.state.activeRecipe.yield}
+                    </div>
+                    <hr/>
+                    <div className="text-center fs-5 pt-2 pb-4 fw-bold text-decoration-underline">
+                      Description
+                    </div>
+                    <p className="container-fluid pb-4 fs-5 text-center">
                       {this.state.activeRecipe.description}
                     </p>
+                    <hr/>
+                    <div className="text-center fs-5 pt-2 pb-4 fw-bold text-decoration-underline">
+                      Nutritional values
+                    </div>
+
+                    <table className="table table-striped table-hover border">
+                      <thead>
+                        <tr>
+                          <th scope="col">Serving</th>
+                          <th scope="col">Calories</th>
+                          <th scope="col">Fat</th>
+                          <th scope="col">Saturate</th>
+                          <th scope="col">Carbohydrates</th>
+                          <th scope="col">Sugars</th>
+                          <th scope="col">Fibre</th>
+                          <th scope="col">Protein</th>
+                          <th scope="col">Salt</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        {this.state.listOfNutrients.map(nutrient => (
+                          <tr key={nutrient.serving}>
+                            <td>
+                              {Capitalize(nutrient.serving)}
+
+                            </td>
+                            <td>
+                              {nutrient.kcal}
+                            </td>
+                            <td>
+                              {nutrient.fat}
+                            </td>
+                            <td>
+                              {nutrient.saturates}
+                            </td>
+                            <td>
+                              {nutrient.carbs}
+                            </td>
+                            <td>
+                              {nutrient.sugars}
+                            </td>
+                            <td>
+                              {nutrient.fibre}
+                            </td>
+                            <td>
+                              {nutrient.protein}
+                            </td>
+                            <td>
+                              {nutrient.salt}
+                            </td>
+
+                          </tr>
+
+                        ))}
+
+                      </tbody>
+                    </table>
 
                   </div>
 
@@ -146,7 +231,7 @@ class Recipe extends React.Component {
                           data-bs-parent="#accordionFlushIngredients">
 
                           <div className="accordion-body rounded">
-                            <table className="table table-striped table-hover">
+                            <table className="table table-striped table-hover border">
                               <thead>
                                 <tr>
                                   <th scope="col">Ingredient</th>
@@ -166,7 +251,7 @@ class Recipe extends React.Component {
                                     </td>
                                     <td>
                                       {ingredient.measurementweight && ingredient.measurementtype ? `${ingredient.measurementweight}${ingredient.measurementtype}` :
-                                        `${ingredient.measurementsize}`}
+                                        (ingredient.measurementsize == null ? `N/A` : `${ingredient.measurementsize}`)}
                                     </td>
 
 

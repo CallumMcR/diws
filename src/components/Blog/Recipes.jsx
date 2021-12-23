@@ -13,7 +13,7 @@ import FilterButton from "./FilterButton.js";
 // Problem is we are using href, so whole page is relkoading and re-setting variables
 
 const recipesPerPage = 3;
-const apiURL = `https://getbakingtestapi.free.beeceptor.com/recipes`
+const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 
 
 function getRecipeTime(cooktime, preptime) {
