@@ -17,20 +17,31 @@ class Recipe extends React.Component {
     listOfAdditionalSteps: [],
     listOfIngredients: [],
     listOfImages: [],
-    listOfNutrients: []
+    listOfNutrients: [],
+    activeAuthor: [],
+    socialMediaLinks: [],
   }// All the arrays in the active recipe are set as states, as otherwise
   // The mapping will try to read the data before it has been mounted
 
 
   componentDidMount = async () => {
     const idNum = (this.props.params).uuid;
-    const req = await fetch(`https://get-baking-recipes-api.free.beeceptor.com/recipes`);
+    const req = await fetch(`https://diws-backup-mod00.free.beeceptor.com/recipes`);
     const res = await req.json();
     res.recipes.forEach((displayRecipe) => {
       if (displayRecipe.id == idNum) {
         this.setState({ activeRecipe: displayRecipe });
       }
     });
+
+    const requestAuthors = await fetch(`https://diws-backup-mod00.free.beeceptor.com/authors`);
+    const responseAuthors = await requestAuthors.json();
+    responseAuthors.forEach((individualAuthor) => {
+      if (individualAuthor.user == this.state.activeRecipe.author) {
+        this.setState({ activeAuthor: individualAuthor });
+      }
+    });
+    this.setState({ socialMediaLinks: this.state.activeAuthor.sociallinks });
 
     this.setState({ listOfInstructions: this.state.activeRecipe.instructions });
     this.setState({ listOfSteps: this.state.listOfInstructions[0].steps });
@@ -128,14 +139,14 @@ class Recipe extends React.Component {
                     <div className="pt-4 fs-5 text-center">
                       Yields: {this.state.activeRecipe.yield}
                     </div>
-                    <hr/>
+                    <hr />
                     <div className="text-center fs-5 pt-2 pb-4 fw-bold text-decoration-underline">
                       Description
                     </div>
                     <p className="container-fluid pb-4 fs-5 text-center">
                       {this.state.activeRecipe.description}
                     </p>
-                    <hr/>
+                    <hr />
                     <div className="text-center fs-5 pt-2 pb-4 fw-bold text-decoration-underline">
                       Nutritional values
                     </div>
@@ -157,8 +168,8 @@ class Recipe extends React.Component {
                       </thead>
                       <tbody>
 
-                        {this.state.listOfNutrients.map(nutrient => (
-                          <tr key={nutrient.serving}>
+                        {this.state.listOfNutrients.map((nutrient, index) => (
+                          <tr key={index}>
                             <td>
                               {Capitalize(nutrient.serving)}
 
@@ -242,8 +253,8 @@ class Recipe extends React.Component {
                               </thead>
                               <tbody>
 
-                                {this.state.listOfIngredients.map(ingredient => (
-                                  <tr key={ingredient.ingredient}>
+                                {this.state.listOfIngredients.map((ingredient, index) => (
+                                  <tr key={index}>
                                     <td>
                                       {Capitalize(ingredient.ingredient) == true ? `${Capitalize(ingredient.ingredient)}` :
                                         `${Capitalize(ingredient.ingredient)}`}
@@ -385,62 +396,61 @@ class Recipe extends React.Component {
                 <div className="row">
 
                   <div className="col-xl-7 text-center align-items-center d-flex">
-                    <div className="row container-fluid align-items-center text-center">
+                    {this.state.socialMediaLinks.map((link, index) => (
+                      <div key={index} className="row container-fluid align-items-center text-center">
 
-                      <div className="col-3 align-items-center text-center">
-                        <button id="myFacebook" className="btn" style={{ color: "#ff80c4" }} name="facebook"
-                          type="submit">
-                          <div className="bi bi-facebook"></div>
-                          FaceBook
-                        </button>
 
+                        {console.log(link.facebook)}
+                        {console.log(link.twitter)}
+                        {(link.facebook !== 'undefined' && link.facebook !== null) &&
+                          <div className="col-4 align-items-center text-center">
+                            <button id="myFacebook" className="btn" style={{ color: "#ff80c4" }} name="facebook" onClick={() => window.open(link.facebook)}
+                            >
+                              <div className="bi bi-facebook"></div>
+                              FaceBook
+                            </button>
+
+                          </div>
+                        }
+
+                        { (link.instagram !== 'undefined' && link.instagram !== null) &&
+                          <div className="col-4">
+                            <button id="myInstagram" className="btn" style={{ color: "#ff80c4" }} name="instagram" onClick={() => window.open(link.instagram)}
+                            >
+                              <div className="bi bi-instagram"></div>
+                              Instagram
+                            </button>
+                          </div>
+                        }
+
+                        {(link.twitter !== 'undefined' && link.twitter !== null) &&
+                          <div className="col-4 align-items-center text-center">
+                            <button id="myTwitter" className="btn" style={{ color: "#ff80c4" }} name="twitter" onClick={() => window.open(link.twitter)}
+                            >
+                              <div className="bi bi-twitter"></div>
+                              Twitter
+                            </button>
+                          </div>
+                        }
                       </div>
 
-                      <div className="col-3 align-items-center text-center">
-                        <button id="myTwitter" className="btn" style={{ color: "#ff80c4" }} name="twitter"
-                          type="submit">
-                          <div className="bi bi-twitter"></div>
-                          Twitter
-                        </button>
-                      </div>
 
-                      <div className="col-3">
-                        <button id="myPinterest" className="btn" style={{ color: "#ff80c4" }} name="pinterest"
-                          type="submit">
-                          <div className="bi bi-pinterest"></div>
-                          Pinterest
-                        </button>
-                      </div>
 
-                      <div className="col-3">
-                        <button id="myInstagram" className="btn" style={{ color: "#ff80c4" }} name="instagram"
-                          type="submit">
-                          <div className="bi bi-instagram"></div>
-                          Instagram
-                        </button>
-                      </div>
-
-                    </div>
+                    ))}
                   </div>
 
 
                   <div className="col-xl-5 justify-content-around">
 
-                    <div className="container-fluid row align-items-center justify-content-center">
-                      <div className="col-4">
+                    <div className="container-fluid row align-items-center d-flex">
+                      <div className="col-8">
                         <div className="text-center">
-                          Made by:
-                        </div>
-                      </div>
-
-                      <div className="col-4 text-center">
-                        <div className="fw-bold text-center">
-                          {this.state.activeRecipe.author}
+                          Made by: <strong>{this.state.activeRecipe.author}</strong>
                         </div>
                       </div>
                       <div className="col-3">
-                        <img src="pictures/userProfile/blankUserImg.png"
-                          className="rounded-circle float-end img-responsive" alt="author"
+                        <img src={this.state.activeAuthor.profileimage}
+                          className="rounded-circle float-end img-fluid" alt="author"
                           style={{ width: "60px", height: "60px" }} />
 
                       </div>
