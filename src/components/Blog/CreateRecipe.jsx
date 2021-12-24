@@ -12,9 +12,8 @@ function CreateRecipe() {
         setRecipeYield(data.target.elements.recipeYield.value);
         setRecipeName(data.target.elements.recipeName.value);
         navigate('/recipes/recipe/print/',
-
-            { recipeName: recipeName }
-            , { replace: false })
+            { state:{recipeName} }
+            )
     }
 
     return (
