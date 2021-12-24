@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { render } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
-import CreateForm from "./CreateForm.js"
-
 
 
 function CreateRecipe() {
@@ -13,7 +11,7 @@ function CreateRecipe() {
         data.preventDefault(); // Stops the page from refreshing and losing the data
         setRecipeYield(data.target.elements.recipeYield.value);
         setRecipeName(data.target.elements.recipeName.value);
-        navigate('recipes/recipe/print/',
+        navigate('/recipes/recipe/print/',
 
             { recipeName: recipeName }
             , { replace: false })
