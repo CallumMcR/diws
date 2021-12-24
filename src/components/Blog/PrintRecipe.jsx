@@ -9,13 +9,14 @@ import PrintComponent from "./PrintComponent.js";
 function PrintRecipe(props) {
 
     const location = useLocation();
-    console.log(location.state)
+    
     return (
         <div>
-            <PrintComponent />
+            <PrintComponent
+            data={location.state} />
             <h2 style={{ color: "green" }}>Attendance</h2>
             <div>
-                asdas
+                {location.state.recipesName}
             </div>
         </div>
     );
