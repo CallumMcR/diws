@@ -12,6 +12,8 @@ import {
   Contact,
   Recipes,
   Recipe,
+  CreateRecipe,
+  PrintRecipe 
 } from "./components";
 
 ReactDOM.render(
@@ -23,6 +25,8 @@ ReactDOM.render(
       <Route path="/contact" element={<Contact />} />
       <Route path="/recipes/" element={<Recipes />} />
       <Route path="recipes/recipe/:uuid" element={<Recipe />} />
+      <Route path="recipes/CreateRecipe/" element={<CreateRecipe />} />
+      <Route path="recipes/recipe/print/" element={<PrintRecipe  />} />
     </Routes>
     <Footer />
   </Router>,

@@ -8,9 +8,7 @@ import FilterButton from "./FilterButton.js";
 
 
 
-// Current bugs:
-// 1. Switching pages when using filters returns to list all recipes
-// Problem is we are using href, so whole page is relkoading and re-setting variables
+
 
 const recipesPerPage = 3;
 const apiURL = `https://diws-backup-mod00.free.beeceptor.com/recipes`
@@ -35,19 +33,17 @@ function getRecipeTime(cooktime, preptime) {
     return (totalMinutes + "mins ");
   }
 }
-function Capitalize(str){
+function Capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-  
-function getListOfIngredients(recipe){
-  var stringOfIngredients="";
-  for(var i =0;i<recipe.ingredients.length;i++)
-  {
+}
+
+function getListOfIngredients(recipe) {
+  var stringOfIngredients = "";
+  for (var i = 0; i < recipe.ingredients.length; i++) {
     var capitalisedFirstChar = Capitalize(recipe.ingredients[i].ingredient);
-    stringOfIngredients+=capitalisedFirstChar;
-    if(i!=recipe.ingredients.length-1)
-    {
-      stringOfIngredients+=", "
+    stringOfIngredients += capitalisedFirstChar;
+    if (i != recipe.ingredients.length - 1) {
+      stringOfIngredients += ", "
     }
   }
   return stringOfIngredients;
@@ -241,10 +237,15 @@ class Recipes extends React.Component {
 
                   </div>
                   <div className="col-6">
-                    <button className="text-center fw-normal fs-5 form-control"
-                      type="button">
-                      Add recipe
-                    </button>
+                    <Link style={{ textDecoration: 'none' }}
+                      to={{
+                        pathname: `CreateRecipe/`
+                      }}>
+                      <button className="text-center fw-normal fs-5 form-control"
+                        type="button">
+                        Create recipe
+                      </button>
+                    </Link>
                   </div>
                   <div className="col-3">
 
@@ -323,9 +324,9 @@ class Recipes extends React.Component {
                                 <div className="text-start" style={{ fontSize: "75%", color: "blue" }}>
                                   {recipe.author}
                                 </div>
-                                <div className="pt-1" style={{ fontSize: "75%",height:"40px",overflow:"hidden" }}>
+                                <div className="pt-1" style={{ fontSize: "75%", height: "40px", overflow: "hidden" }}>
                                   {getListOfIngredients(recipe) <= 70 ? `${getListOfIngredients(recipe)}` :
-                                      `${getListOfIngredients(recipe).substring(0, 67)}...`}
+                                    `${getListOfIngredients(recipe).substring(0, 67)}...`}
                                 </div>
 
                                 <div className="row align-items-center pt-1">
