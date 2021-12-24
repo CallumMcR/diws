@@ -4,16 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 function CreateRecipe() {
-    const [recipeName, setRecipeName] = useState();
-    const [recipeYield, setRecipeYield] = useState();
+
     let navigate = useNavigate();
-    async function getData(data) {
+
+
+    function getData(data) {
+
         data.preventDefault(); // Stops the page from refreshing and losing the data
-        setRecipeYield(data.target.elements.recipeYield.value);
-        setRecipeName(data.target.elements.recipeName.value);
         navigate('/recipes/recipe/print/',
-            { state:{recipeName} }
-            )
+            {
+                state: {
+                    recipesName: data.target.elements.recipeName.value,
+                    recipesYield: data.target.elements.recipeYield.value
+                }
+            }
+        )
     }
 
     return (

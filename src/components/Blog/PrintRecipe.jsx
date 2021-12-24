@@ -8,8 +8,8 @@ import PrintComponent from "./PrintComponent.js";
 
 function PrintRecipe(props) {
 
-    const {state } = useLocation();
-    console.log(state)
+    const location = useLocation();
+    console.log(location.state)
     return (
         <div>
             <PrintComponent />
