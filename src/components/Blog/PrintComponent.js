@@ -29,11 +29,13 @@ class ComponentToPrint extends React.Component {
   state = {
     recipeData: []
   }
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     const data = localStorage.getItem("printData")
+    console.log(data);
     if (data) {
       const parsedData = JSON.parse(data);
-      this.setState({ recipeData: parsedData.data })     
+      this.setState({ recipeData: parsedData.data })
+      console.log(this.state.recipeData);
     }
   }
 
@@ -44,6 +46,13 @@ class ComponentToPrint extends React.Component {
       <div>
         <h2 style={{ color: "green" }}>{this.state.recipeData.recipesName}</h2>
         {this.state.recipeData.recipesYield}
+        <div className="" style={{whiteSpace:"pre-line"}}>
+          {this.state.recipeData.recipesIngredients}
+        </div>
+        <div className="" style={{whiteSpace:"pre-line"}}>
+          {this.state.recipeData.recipesSteps}
+        </div>
+
 
       </div>
     );
