@@ -262,7 +262,8 @@ function CreateRecipe() {
                                     <div className="col-3">
                                         <Form.Select aria-label="Measurements"
                                             onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)}
-                                            name="units">
+                                            name="units"
+                                            style={{ borderColor: "#ff80c4" }}>
                                             <option value="g">Grams</option>
                                             <option value="mg">Milligrams</option>
                                             <option value="kg">Kilograms</option>
