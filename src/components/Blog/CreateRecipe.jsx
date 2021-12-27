@@ -48,14 +48,15 @@ function CreateRecipe() {
 
         if (event.target.name == "units") {
             var convert = require('convert-units');
-            
+
             const listOfPossibilities = convert().from(ingredients[index].units).possibilities()
-            if (listOfPossibilities.indexOf(ingredients[index].prevUnits) >-1) { // Checking if the units are applicable to be converted
+            if (listOfPossibilities.indexOf(ingredients[index].prevUnits) > -1) { // Checking if the units are applicable to be converted
                 const newMeasurementValue = [...ingredients];
                 console.log(currentMeasurementValue);
                 const newValue = convert(Number(currentMeasurementValue)).from(ingredients[index].prevUnits).to(ingredients[index].units);
                 console.log(newValue);
-                newMeasurementValue[index]["measurementValue"] = newValue;
+                var roundedNumber = Number(newValue).toFixed(4);
+                newMeasurementValue[index]["measurementValue"] =roundedNumber;
                 setIngredients(newMeasurementValue);
             }
         }
@@ -249,33 +250,30 @@ function CreateRecipe() {
 
 
                                     </div>
-                                    <div className="col-3">
-                                        <input type="number"
-                                            className="form-control"
-                                            name="measurementValue" label="measurementValue"
-                                            placeholder="Measurement Value"
-                                            value={ingredient.measurementValue}
-                                            style={{ borderColor: "#ff80c4" }}
-                                            onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)} />
+                                    <div className="col-6">
+                                        <InputGroup>
+                                            <FormControl type="number"
+                                                className="form-control"
+                                                name="measurementValue" label="measurementValue"
+                                                placeholder="Value"
+                                                value={ingredient.measurementValue}
+                                                style={{ borderColor: "#ff80c4" }}
+                                                onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)} />
+                                            <Form.Select aria-label="Measurements"
+                                                onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)}
+                                                name="units"
+                                                style={{ borderColor: "#ff80c4" }}>
+                                                <option value="g">Grams</option>
+                                                <option value="mg">Milligrams</option>
+                                                <option value="kg">Kilograms</option>
+                                                <option value="oz">Ounces</option>
+                                                <option value="ml">Milliliters</option>
+                                                <option value="l">Liters</option>
+                                                <option value="fl-oz">Teaspoons</option>
+                                            </Form.Select>
+                                        </InputGroup>
+
                                     </div>
-
-                                    <div className="col-3">
-                                        <Form.Select aria-label="Measurements"
-                                            onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)}
-                                            name="units"
-                                            style={{ borderColor: "#ff80c4" }}>
-                                            <option value="g">Grams</option>
-                                            <option value="mg">Milligrams</option>
-                                            <option value="kg">Kilograms</option>
-                                            <option value="oz">Ounces</option>
-                                            <option value="ml">Milliliters</option>
-                                            <option value="l">Liters</option>
-                                            <option value="fl-oz">Teaspoons</option>
-                                        </Form.Select>
-
-                                    </div>
-
-
 
                                     <div className="col-3">
 
