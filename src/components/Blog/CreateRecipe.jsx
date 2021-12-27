@@ -8,7 +8,7 @@ function CreateRecipe() {
 
     let navigate = useNavigate();
     const [ingredients, setIngredients] = useState([
-        { ingredientName: "", measurementValue: "", units: "g", prevUnits: "g" },
+        { ingredientName: "", measurementValue: "0", units: "g", prevUnits: "g" },
     ]);
     const [steps, setSteps] = useState();
     const [description, setDescription] = useState();
@@ -32,15 +32,34 @@ function CreateRecipe() {
         )
     }
 
-    const handleChangeInput = async(index, event,currentUnit) => {
-        const unitValues = [...ingredients];
+
+
+    const handleChangeInput = async (index, event, currentUnit, currentMeasurementValue) => {
+
         if (event.target.name == "units") {
-            unitValues[index]["prevUnits"]= currentUnit;
+            const unitValues = [...ingredients];
+            unitValues[index]["prevUnits"] = currentUnit;
             setIngredients(unitValues)
         }
         const values = [...ingredients];
         values[index][event.target.name] = event.target.value;
         setIngredients(values);
+
+
+        if (event.target.name == "units") {
+            var convert = require('convert-units');
+            
+            const listOfPossibilities = convert().from(ingredients[index].units).possibilities()
+            if (listOfPossibilities.indexOf(ingredients[index].prevUnits) >-1) { // Checking if the units are applicable to be converted
+                const newMeasurementValue = [...ingredients];
+                console.log(currentMeasurementValue);
+                const newValue = convert(Number(currentMeasurementValue)).from(ingredients[index].prevUnits).to(ingredients[index].units);
+                console.log(newValue);
+                newMeasurementValue[index]["measurementValue"] = newValue;
+                setIngredients(newMeasurementValue);
+            }
+        }
+
     }
 
     const handleAddFields = () => {
@@ -231,18 +250,18 @@ function CreateRecipe() {
 
                                     </div>
                                     <div className="col-3">
-                                        <input type="text"
+                                        <input type="number"
                                             className="form-control"
                                             name="measurementValue" label="measurementValue"
                                             placeholder="Measurement Value"
                                             value={ingredient.measurementValue}
                                             style={{ borderColor: "#ff80c4" }}
-                                            onChange={(event) => handleChangeInput(index, event)} />
+                                            onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)} />
                                     </div>
 
                                     <div className="col-3">
                                         <Form.Select aria-label="Measurements"
-                                            onChange={(event) => handleChangeInput(index, event,ingredient.units)}
+                                            onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)}
                                             name="units">
                                             <option value="g">Grams</option>
                                             <option value="mg">Milligrams</option>
@@ -250,8 +269,7 @@ function CreateRecipe() {
                                             <option value="oz">Ounces</option>
                                             <option value="ml">Milliliters</option>
                                             <option value="l">Liters</option>
-                                            <option value="cups">Cups of</option>
-                                            <option value="teaspoons">Teaspoons</option>
+                                            <option value="fl-oz">Teaspoons</option>
                                         </Form.Select>
 
                                     </div>
