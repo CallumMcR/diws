@@ -1,4 +1,5 @@
 import React from 'react';
+
 const Form = props => ( 
     <form className="container-fluid" onSubmit={props.getRecipe}>
         <div className="input-group-addon align-items-center border row shadow-sm">
