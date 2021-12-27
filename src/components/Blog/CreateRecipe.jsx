@@ -8,7 +8,7 @@ function CreateRecipe() {
 
     let navigate = useNavigate();
     const [ingredients, setIngredients] = useState([
-        { ingredientName: "", measurementValue: "", units: "", prevUnits: "g" },
+        { ingredientName: "", measurementValue: "", units: "g", prevUnits: "g" },
     ]);
     const [steps, setSteps] = useState();
     const [description, setDescription] = useState();
@@ -19,7 +19,6 @@ function CreateRecipe() {
     const handleShow = () => setShow(true);
 
     function getData(data) {
-        console.log(data);
         data.preventDefault(); // Stops the page from refreshing and losing the data
         navigate('/recipes/recipe/print/',
             {
@@ -33,7 +32,12 @@ function CreateRecipe() {
         )
     }
 
-    const handleChangeInput = (index, event) => {
+    const handleChangeInput = async(index, event,currentUnit) => {
+        const unitValues = [...ingredients];
+        if (event.target.name == "units") {
+            unitValues[index]["prevUnits"]= currentUnit;
+            setIngredients(unitValues)
+        }
         const values = [...ingredients];
         values[index][event.target.name] = event.target.value;
         setIngredients(values);
@@ -41,7 +45,7 @@ function CreateRecipe() {
 
     const handleAddFields = () => {
         setIngredients([...ingredients,
-        { ingredientName: "", measurementValue: "", units: "", prevUnits: "g" }])
+        { ingredientName: "", measurementValue: "", units: "g", prevUnits: "g" }])
     }
 
     const handleRemoveFields = (index) => {
@@ -210,7 +214,7 @@ function CreateRecipe() {
                         <div className="pt-3">
 
                             {ingredients.map((ingredient, index) => (
-                                <div className="row align-items-center d-flex" key={index}>
+                                <div className="row align-items-center d-flex py-2" key={index}>
 
                                     <div className="col-3">
 
@@ -218,7 +222,7 @@ function CreateRecipe() {
                                         <input type="text"
                                             className="form-control"
                                             name="ingredientName" label="Ingredient Name"
-                                            placeholder="ingredient"
+                                            placeholder="Ingredient Name"
                                             value={ingredient.ingredientName}
                                             style={{ borderColor: "#ff80c4" }}
                                             onChange={(event) => handleChangeInput(index, event)}>
@@ -228,18 +232,28 @@ function CreateRecipe() {
                                     </div>
                                     <div className="col-3">
                                         <input type="text"
+                                            className="form-control"
                                             name="measurementValue" label="measurementValue"
-                                            placeholder="measurement"
+                                            placeholder="Measurement Value"
                                             value={ingredient.measurementValue}
+                                            style={{ borderColor: "#ff80c4" }}
                                             onChange={(event) => handleChangeInput(index, event)} />
                                     </div>
 
                                     <div className="col-3">
-                                        <input type="text"
-                                            name="units" label="units"
-                                            placeholder="measurement unit"
-                                            value={ingredient.units}
-                                            onChange={(event) => handleChangeInput(index, event)} />
+                                        <Form.Select aria-label="Measurements"
+                                            onChange={(event) => handleChangeInput(index, event,ingredient.units)}
+                                            name="units">
+                                            <option value="g">Grams</option>
+                                            <option value="mg">Milligrams</option>
+                                            <option value="kg">Kilograms</option>
+                                            <option value="oz">Ounces</option>
+                                            <option value="ml">Milliliters</option>
+                                            <option value="l">Liters</option>
+                                            <option value="cups">Cups of</option>
+                                            <option value="teaspoons">Teaspoons</option>
+                                        </Form.Select>
+
                                     </div>
 
 
@@ -318,8 +332,7 @@ function CreateRecipe() {
                             </div>
 
                             <div className="col-6">
-                                <Form.Select aria-label="Measurements"
-                                >
+                                <Form.Select aria-label="Measurements">
                                     <option value="mg">Milligrams</option>
                                     <option value="g">Grams</option>
                                     <option value="kg">Kilograms</option>
