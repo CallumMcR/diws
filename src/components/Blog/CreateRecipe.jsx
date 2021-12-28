@@ -5,16 +5,27 @@ import { Modal, Button, InputGroup, FormControl, Form } from "react-bootstrap";
 
 
 function CreateRecipe() {
-
     let navigate = useNavigate();
     const [ingredients, setIngredients] = useState([
         { ingredientName: "", measurementValue: "0", units: "g", prevUnits: "g" },
     ]);
+
+    const [nutrition, setNutritonialValues] = useState([
+        { nutritionName: "Servings", measurementValue: "0", units: "g", prevUnits: "g" },
+        { nutritionName: "Kcal", measurementValue: "0", units: "g", prevUnits: "g" },
+        { nutritionName: "Fat", measurementValue: "0", units: "g", prevUnits: "g" },
+        { nutritionName: "Saturates", measurementValue: "0", units: "g", prevUnits: "g" },
+        { nutritionName: "Carbs", measurementValue: "0", units: "g", prevUnits: "g" },
+        { nutritionName: "Sugars", measurementValue: "0", units: "g", prevUnits: "g" },
+        { nutritionName: "Fibre", measurementValue: "0", units: "g", prevUnits: "g" },
+        { nutritionName: "Protein", measurementValue: "0", units: "g", prevUnits: "g" },
+        { nutritionName: "Salt", measurementValue: "0", units: "g", prevUnits: "g" },
+    ]);
     const [steps, setSteps] = useState();
     const [description, setDescription] = useState();
     const [backgroundImage, setBackgroundImage] = useState(`https://i.gyazo.com/855e8ca01684f0d61e302ba09a177bfd.png`);
-    const [show, setShow] = useState(false);
 
+    const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -26,13 +37,39 @@ function CreateRecipe() {
                     recipesName: data.target.elements.recipeName.value,
                     recipesYield: data.target.elements.recipeYield.value,
                     recipesIngredients: ingredients,
-                    recipesSteps: steps
+                    recipesSteps: steps,
+                    recipesNutrition: nutrition,
+                    recipesImage:backgroundImage,
+                    recipesDescription:description,
                 }
             }
         )
     }
 
+    const handleNutritionalChangeInput = async (index, event, currentUnit, currentMeasurementValue) => {
+        if (event.target.name == "units") {
+            const unitValues = [...nutrition];
+            unitValues[index]["prevUnits"] = currentUnit;
+            setNutritonialValues(unitValues)
+        }
+        const values = [...nutrition];
+        values[index][event.target.name] = event.target.value;
+        setNutritonialValues(values);
 
+
+        if (event.target.name == "units") {
+            var convert = require('convert-units');
+
+            const listOfPossibilities = convert().from(nutrition[index].units).possibilities()
+            if (listOfPossibilities.indexOf(nutrition[index].prevUnits) > -1) { // Checking if the units are applicable to be converted
+                const newMeasurementValue = [...nutrition];
+                const newValue = convert(Number(currentMeasurementValue)).from(nutrition[index].prevUnits).to(nutrition[index].units);
+                var roundedNumber = Number(newValue).toFixed(4);//Rounding to 4 decimal places
+                newMeasurementValue[index]["measurementValue"] = roundedNumber;
+                setNutritonialValues(newMeasurementValue);
+            }
+        }
+    }
 
     const handleChangeInput = async (index, event, currentUnit, currentMeasurementValue) => {
 
@@ -52,11 +89,9 @@ function CreateRecipe() {
             const listOfPossibilities = convert().from(ingredients[index].units).possibilities()
             if (listOfPossibilities.indexOf(ingredients[index].prevUnits) > -1) { // Checking if the units are applicable to be converted
                 const newMeasurementValue = [...ingredients];
-                console.log(currentMeasurementValue);
                 const newValue = convert(Number(currentMeasurementValue)).from(ingredients[index].prevUnits).to(ingredients[index].units);
-                console.log(newValue);
-                var roundedNumber = Number(newValue).toFixed(4);
-                newMeasurementValue[index]["measurementValue"] =roundedNumber;
+                var roundedNumber = Number(newValue).toFixed(4);//Rounding to 4 decimal places
+                newMeasurementValue[index]["measurementValue"] = roundedNumber;
                 setIngredients(newMeasurementValue);
             }
         }
@@ -259,6 +294,7 @@ function CreateRecipe() {
                                                 value={ingredient.measurementValue}
                                                 style={{ borderColor: "#ff80c4" }}
                                                 onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)} />
+
                                             <Form.Select aria-label="Measurements"
                                                 onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)}
                                                 name="units"
@@ -271,9 +307,12 @@ function CreateRecipe() {
                                                 <option value="l">Liters</option>
                                                 <option value="fl-oz">Teaspoons</option>
                                             </Form.Select>
+
                                         </InputGroup>
 
                                     </div>
+
+
 
                                     <div className="col-3">
 
@@ -289,7 +328,6 @@ function CreateRecipe() {
 
                                             <div className="col-6">
                                                 <Button className="bi bi-plus-lg
-                                                
                                                 rounded-circle"variant="primary"
                                                     onClick={() => handleAddFields()}>
 
@@ -338,34 +376,49 @@ function CreateRecipe() {
                         </div>
 
 
+                        {nutrition.map((nutrientType, index) => (
+                            <div className="pt-3" key={index}>
 
-                        <div className="pt-3 row">
-                            <div className="col-6">
-                                <input placeholder="Fat"
-                                    style={{ borderColor: "#ff80c4" }} type="text"
-                                    className="form-control" name="recipesFat"
-                                    id="recipesFat"
-                                    value="" />
+
+                                <div className="fs-5 fw-bold pb-4 text-decoration-underline text-start">{nutrientType.nutritionName}</div>
+                                <InputGroup>
+                                    {index == 0 &&
+                                        <InputGroup.Text
+                                        >Number
+                                        </InputGroup.Text>
+                                    }
+                                    {index == 1 &&
+                                        <InputGroup.Text
+                                        >Kcal
+                                        </InputGroup.Text>
+                                    }
+
+                                    <FormControl placeholder={nutrientType.nutritionName}
+                                        style={{ borderColor: "#ff80c4" }} type="number"
+                                        name="measurementValue"
+                                        onChange={(event) => handleNutritionalChangeInput(index, event, nutrientType.units, nutrientType.measurementValue)}
+                                        value={nutrientType.measurementValue} />
+                                    {index > 1 &&
+                                        <Form.Select
+                                            style={{ borderColor: "#ff80c4" }}
+                                            name="units"
+                                            onChange={(event) => handleNutritionalChangeInput(index, event, nutrientType.units, nutrientType.measurementValue)}>
+                                            <option value="g">Grams</option>
+                                            <option value="mg">Milligrams</option>
+                                            <option value="kg">Kilograms</option>
+                                            <option value="oz">Ounces</option>
+                                            <option value="ml">Milliliters</option>
+                                            <option value="l">Liters</option>
+                                            <option value="fl-oz">Teaspoons</option>
+                                        </Form.Select>
+                                    }
+                                </InputGroup>
+
+
                             </div>
 
-                            <div className="col-6">
-                                <Form.Select aria-label="Measurements">
-                                    <option value="mg">Milligrams</option>
-                                    <option value="g">Grams</option>
-                                    <option value="kg">Kilograms</option>
-                                    <option value="oz">Ounces</option>
-                                    <option value="ml">Milliliters</option>
-                                    <option value="l">Liters</option>
-                                    <option value="cups">Cups of</option>
-                                    <option value="teaspoons">Teaspoons</option>
-                                </Form.Select>
 
-
-                            </div>
-                        </div>
-
-
-
+                        ))}
 
 
 
