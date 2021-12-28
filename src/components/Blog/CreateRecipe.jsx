@@ -27,6 +27,9 @@ function CreateRecipe() {
     ]);
     const [description, setDescription] = useState();
     const [backgroundImage, setBackgroundImage] = useState(`https://i.gyazo.com/855e8ca01684f0d61e302ba09a177bfd.png`);
+    const [prepTime,setPrepTime]= useState(0);
+    const [cookTime,setCookTime]= useState(0);
+    const [difficulty,setDifficulty]=useState("N/A");
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -46,6 +49,9 @@ function CreateRecipe() {
                     recipesNutrition: nutrition,
                     recipesImage: backgroundImage,
                     recipesDescription: description,
+                    recipesDifficulty: difficulty,
+                    recipesCookTime: cookTime,
+                    recipesPrepTime: prepTime,
                 }
             }
         )
@@ -252,16 +258,19 @@ function CreateRecipe() {
 
                         <div className="pt-3 row">
                             <div className="col-4">
-                                <input placeholder="Preparation Time" style={{ borderColor: "#ff80c4" }} type="text" className="form-control" name="recipePrepTime" id="recipePrepTime" />
+                                <input placeholder="Preparation Time" style={{ borderColor: "#ff80c4" }} type="text" className="form-control" name="recipePrepTime" id="recipePrepTime" 
+                                onChange={(e) => { setPrepTime(e.target.value); }}/>
                             </div>
 
                             <div className="col-4">
                                 <input placeholder="Cook Time" style={{ borderColor: "#ff80c4" }}
                                     type="text" className="form-control" name="recipeCookTime"
-                                    id="recipeCookTime" />
+                                    id="recipeCookTime" 
+                                    onChange={(e) => { setCookTime(e.target.value); }}/>
                             </div>
                             <div className="col-4">
-                                <input placeholder="Difficulty" style={{ borderColor: "#ff80c4" }} type="text" className="form-control" name="recipeDifficulty" id="recipeDifficulty" />
+                                <input placeholder="Difficulty" style={{ borderColor: "#ff80c4" }} type="text" className="form-control" name="recipeDifficulty" id="recipeDifficulty" 
+                                onChange={(e) => { setDifficulty(e.target.value); }}/>
                             </div>
                         </div>
 
