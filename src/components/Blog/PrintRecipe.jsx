@@ -16,17 +16,17 @@ function PrintRecipe(props) {
     }
     return (
         <div>
-            {console.log(location.state)}
-            <PrintComponent
 
-                data={location.state} />
             <div className="text-dark p-5 text-center" style={{ backgroundColor: "white" }}>
                 <div className="container-fluid row d-flex">
 
                     <div className="align-items-center rounded py-3" style={{ backgroundColour: "white" }}>
                         <h1>
                             {location.state.recipesName}
+
                         </h1>
+
+
                     </div>
 
 
@@ -45,14 +45,18 @@ function PrintRecipe(props) {
 
                             <div className="container-fluid">
 
-                                <div className="pt-3 border"
-                                    style={{
-                                        height: "24rem", backgroundImage: `url(${location.state.recipesImage})`,
-                                        backgroundPosition: "center",
-                                        backgroundSize: "cover",
-                                        position: "relative"
-                                    }}>
+                                <div className="container">
+                                    <img className="border img-fluid w-100"
+                                        src={location.state.recipesImage}
+                                        style={{
+                                            height: "30rem",
+                                            width: "auto",
+                                            position: "center",
+                                            objectFit: "cover",
+                                        }}>
+                                    </img>
                                 </div>
+
 
 
 
@@ -111,20 +115,20 @@ function PrintRecipe(props) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                    
-                                                <tr>
-                                                    <th>{location.state.recipesNutrition[0].measurementValue}</th>
-                                                    <th>{location.state.recipesNutrition[1].measurementValue}</th>
-                                                    <th>{location.state.recipesNutrition[2].measurementValue+location.state.recipesNutrition[2].units}</th>
-                                                    <th>{location.state.recipesNutrition[3].measurementValue+location.state.recipesNutrition[3].units}</th>
-                                                    <th>{location.state.recipesNutrition[4].measurementValue+location.state.recipesNutrition[4].units}</th>
-                                                    <th>{location.state.recipesNutrition[5].measurementValue+location.state.recipesNutrition[5].units}</th>
-                                                    <th>{location.state.recipesNutrition[6].measurementValue+location.state.recipesNutrition[6].units}</th>
-                                                    <th>{location.state.recipesNutrition[7].measurementValue+location.state.recipesNutrition[7].units}</th>
-                                                    <th>{location.state.recipesNutrition[8].measurementValue+location.state.recipesNutrition[8].units}</th>
-                                                </tr>
 
-                                       
+                                            <tr>
+                                                <th>{location.state.recipesNutrition[0].measurementValue}</th>
+                                                <th>{location.state.recipesNutrition[1].measurementValue}</th>
+                                                <th>{location.state.recipesNutrition[2].measurementValue + location.state.recipesNutrition[2].units}</th>
+                                                <th>{location.state.recipesNutrition[3].measurementValue + location.state.recipesNutrition[3].units}</th>
+                                                <th>{location.state.recipesNutrition[4].measurementValue + location.state.recipesNutrition[4].units}</th>
+                                                <th>{location.state.recipesNutrition[5].measurementValue + location.state.recipesNutrition[5].units}</th>
+                                                <th>{location.state.recipesNutrition[6].measurementValue + location.state.recipesNutrition[6].units}</th>
+                                                <th>{location.state.recipesNutrition[7].measurementValue + location.state.recipesNutrition[7].units}</th>
+                                                <th>{location.state.recipesNutrition[8].measurementValue + location.state.recipesNutrition[8].units}</th>
+                                            </tr>
+
+
 
                                         </tbody>
                                     </table>
@@ -183,7 +187,7 @@ function PrintRecipe(props) {
 
                                                                     </td>
                                                                     <td>
-                                                                        {ingredient.measurementValue+ingredient.units}
+                                                                        {ingredient.measurementValue + ingredient.units}
                                                                     </td>
                                                                 </tr>
 
@@ -250,14 +254,23 @@ function PrintRecipe(props) {
                                                     <div className="py-3">
 
                                                     </div>
-                         
+
                                                 </div>
+
 
                                             </div>
 
+
                                         </div>
+
                                     </div>
 
+
+                                </div>
+                                <div className="container-fluid pt-5">
+                                    <PrintComponent
+
+                                        data={location.state} />
                                 </div>
 
 
