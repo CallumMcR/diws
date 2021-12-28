@@ -10,6 +10,10 @@ function CreateRecipe() {
         { ingredientName: "", measurementValue: "0", units: "g", prevUnits: "g" },
     ]);
 
+    const [instructions, setInstructions] = useState([
+        { step: "" },
+    ]);
+
     const [nutrition, setNutritonialValues] = useState([
         { nutritionName: "Servings", measurementValue: "0", units: "g", prevUnits: "g" },
         { nutritionName: "Kcal", measurementValue: "0", units: "g", prevUnits: "g" },
@@ -21,7 +25,6 @@ function CreateRecipe() {
         { nutritionName: "Protein", measurementValue: "0", units: "g", prevUnits: "g" },
         { nutritionName: "Salt", measurementValue: "0", units: "g", prevUnits: "g" },
     ]);
-    const [steps, setSteps] = useState();
     const [description, setDescription] = useState();
     const [backgroundImage, setBackgroundImage] = useState(`https://i.gyazo.com/855e8ca01684f0d61e302ba09a177bfd.png`);
 
@@ -37,10 +40,10 @@ function CreateRecipe() {
                     recipesName: data.target.elements.recipeName.value,
                     recipesYield: data.target.elements.recipeYield.value,
                     recipesIngredients: ingredients,
-                    recipesSteps: steps,
+                    recipesSteps: instructions,
                     recipesNutrition: nutrition,
-                    recipesImage:backgroundImage,
-                    recipesDescription:description,
+                    recipesImage: backgroundImage,
+                    recipesDescription: description,
                 }
             }
         )
@@ -95,6 +98,29 @@ function CreateRecipe() {
                 setIngredients(newMeasurementValue);
             }
         }
+
+    }
+
+
+
+    const handleChangeInstruction = async (index, event) => {
+        const values = [...instructions];
+        values[index][event.target.name] = event.target.value;
+        setInstructions(values);
+    }
+
+
+    const handleAddStep = () => {
+        setInstructions([...instructions,
+        { step: "" }])
+    }
+    const handleRemoveStep = (index) => {
+        const values = [...instructions];
+        if (values.length > 1) {
+            values.splice(index, 1);
+            setInstructions(values);
+        }
+
 
     }
 
@@ -366,15 +392,52 @@ function CreateRecipe() {
 
 
 
+                        {instructions.map((step, index) => (
+                            <div className="row align-items-center d-flex py-2" key={index}>
+                                <div className="py-2 fs-5 fw-bold text-start">
+                                    Step {index + 1}:
+                                </div>
+                                <div className="col-9">
 
-                        <div className="pt-3">
-                            <textarea placeholder="Please enter your recipes steps/instructions here..."
-                                style={{ borderColor: "#ff80c4" }} type="text" className="form-control"
-                                name='recipeInstructions' id="recipeInstructions" rows="12"
-                                onChange={(e) => { setSteps(e.target.value); }}>
-                            </textarea>
-                        </div>
 
+                                    <input type="text"
+                                        className="form-control"
+                                        name="step" label="Instruction"
+                                        placeholder="Instruction"
+                                        value={step.step}
+                                        style={{ borderColor: "#ff80c4" }}
+                                        onChange={(event) => handleChangeInstruction(index, event)}>
+                                    </input>
+                                    
+{console.log(instructions)}
+                                </div>
+
+                                <div className="col-3">
+
+                                    <div className="row">
+
+                                        <div className="col-6">
+                                            <Button className="bi bi-dash 
+                                        rounded-circle"
+                                                variant="primary"
+                                                onClick={() => handleRemoveStep(index)}>
+                                            </Button>
+                                        </div>
+
+                                        <div className="col-6">
+                                            <Button className="bi bi-plus-lg
+                                        rounded-circle"variant="primary"
+                                                onClick={() => handleAddStep()}>
+
+                                            </Button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        ))}
 
                         {nutrition.map((nutrientType, index) => (
                             <div className="pt-3" key={index}>
