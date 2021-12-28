@@ -34,13 +34,15 @@ function CreateRecipe() {
 
     function getData(data) {
         data.preventDefault(); // Stops the page from refreshing and losing the data
+        const newInstructions = Object.values(instructions);
+        const newIngredients = Object.values(ingredients);
         navigate('/recipes/recipe/print/',
             {
                 state: {
                     recipesName: data.target.elements.recipeName.value,
                     recipesYield: data.target.elements.recipeYield.value,
-                    recipesIngredients: ingredients,
-                    recipesSteps: instructions,
+                    recipesIngredients: newIngredients,
+                    recipesSteps: newInstructions,
                     recipesNutrition: nutrition,
                     recipesImage: backgroundImage,
                     recipesDescription: description,
@@ -102,7 +104,6 @@ function CreateRecipe() {
     }
 
 
-
     const handleChangeInstruction = async (index, event) => {
         const values = [...instructions];
         values[index][event.target.name] = event.target.value;
@@ -112,7 +113,7 @@ function CreateRecipe() {
 
     const handleAddStep = () => {
         setInstructions([...instructions,
-        { step: "" }])
+        { step: "" },])
     }
     const handleRemoveStep = (index) => {
         const values = [...instructions];
@@ -126,7 +127,7 @@ function CreateRecipe() {
 
     const handleAddFields = () => {
         setIngredients([...ingredients,
-        { ingredientName: "", measurementValue: "", units: "g", prevUnits: "g" }])
+        { ingredientName: "", measurementValue: "", units: "g", prevUnits: "g" },])
     }
 
     const handleRemoveFields = (index) => {
@@ -295,6 +296,7 @@ function CreateRecipe() {
                         <div className="pt-3">
 
                             {ingredients.map((ingredient, index) => (
+                                
                                 <div className="row align-items-center d-flex py-2" key={index}>
 
                                     <div className="col-3">
@@ -308,7 +310,7 @@ function CreateRecipe() {
                                             style={{ borderColor: "#ff80c4" }}
                                             onChange={(event) => handleChangeInput(index, event)}>
                                         </input>
-
+                                        {console.log(ingredients)}
 
                                     </div>
                                     <div className="col-6">
@@ -408,8 +410,8 @@ function CreateRecipe() {
                                         style={{ borderColor: "#ff80c4" }}
                                         onChange={(event) => handleChangeInstruction(index, event)}>
                                     </input>
-                                    
-{console.log(instructions)}
+
+                                    {console.log(instructions)}
                                 </div>
 
                                 <div className="col-3">

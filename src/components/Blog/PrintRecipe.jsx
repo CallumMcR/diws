@@ -12,11 +12,13 @@ function PrintRecipe(props) {
     
     return (
         <div>
+            {console.log(location.state)}
             <PrintComponent
+            
             data={location.state} />
             <h2 style={{ color: "green" }}>Attendance</h2>
             <div>
-                {location.state.recipesName}
+                
             </div>
         </div>
     );

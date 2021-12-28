@@ -27,7 +27,8 @@ export default function PrintComponent(data) {
 // component to be printed
 class ComponentToPrint extends React.Component {
   state = {
-    recipeData: []
+    recipeData: [],
+    instructions:[]
   }
   componentDidMount = async () => {
     const data = localStorage.getItem("printData")
@@ -44,13 +45,13 @@ class ComponentToPrint extends React.Component {
   render() {
     return (
       <div>
-        <h2 style={{ color: "green" }}>{this.state.recipeData.recipesName}</h2>
-        {this.state.recipeData.recipesYield}
+        <h2 style={{ color: "green" }}></h2>
+        
         <div className="" style={{whiteSpace:"pre-line"}}>
-          {this.state.recipeData.recipesIngredients}
+          
         </div>
         <div className="" style={{whiteSpace:"pre-line"}}>
-          {this.state.recipeData.recipesSteps}
+          
         </div>
 
 
