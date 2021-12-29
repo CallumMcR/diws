@@ -42,7 +42,7 @@ class ComponentToPrint extends React.Component {
         recipeData: parsedData.data
       })
       this.setState({ listOfIngredients: parsedData.data.recipesIngredients })
-      this.setState({listOfInstructions:parsedData.data.recipesSteps})
+      this.setState({ listOfInstructions: parsedData.data.recipesSteps })
 
 
 
@@ -153,42 +153,60 @@ class ComponentToPrint extends React.Component {
         </div>
 
         <div className="pt-3">
-          <div className="row">
-
-            <div className="col-8">
-
-            </div>
-
-            <div className="col-4">
-
-              <div className="fs-4 fw-bold text-center">
-
-              </div>
-
-              <div className="pt-3">
+          <div className="container-fluid">
+            <div className="row">
 
 
-               
-                {this.state.listOfIngredients.map((ingredient, index) => (
-                  <div key={index}>
+              <div className="col-7">
 
-                    <div>
-                      {ingredient.ingredientName}
+                <div className="fs-3 fw-bold text-center rounded-top py-2 " style={{ backgroundColor: "#ff80c4", color: "white" }}>
+                  Instructions
+                </div>
+
+                <div className="container-fluid pt-2 text-dark fs-5 rounded-bottom">
+                  {this.state.listOfIngredients.map((ingredient, index) => (
+                    <div key={index} className="py-2">
+                      Step {index + 1}:
+                      <div className="pt-1">
+                        {ingredient.ingredientName}
+                      </div>
                     </div>
-                  </div>
 
-                ))}
+                  ))}
+                </div>
+              </div>
+
+              <div className="col-5">
+
+                <div className="fs-3 fw-bold text-center rounded-top py-2" style={{ backgroundColor: "#ff80c4", color: "white" }}>
+                  Ingredients
+                </div>
+
+                <div className="container-fluid py-2 rounded-bottom text-dark fs-5">
+                  {this.state.listOfIngredients.map((ingredient, index) => (
+                    <div key={index}>
+                      <ul>
+                        <li>
+                          {ingredient.ingredientName}
+                        </li>
+                      </ul>
+                    </div>
+
+                  ))}
+                </div>
+
 
               </div>
 
-            </div>
 
+            </div>
           </div>
+
 
         </div>
 
 
-      </div>
+      </div >
     );
   }
 }
