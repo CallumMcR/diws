@@ -1,11 +1,7 @@
-import React, { useRef } from 'react';
-import { render } from "react-dom";
-import { useReactToPrint } from 'react-to-print';
+import React from 'react';
 import { useLocation } from "react-router-dom";
 import PrintComponent from "./PrintComponent.js";
-import { Carousel } from "react-bootstrap";
-import moment from "moment";
-
+import { render } from "react-dom";
 
 
 function PrintRecipe(props) {
@@ -178,7 +174,7 @@ function PrintRecipe(props) {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-
+                                                          
                                                             {location.state.recipesIngredients.map((ingredient, index) => (
                                                                 <tr key={index}>
                                                                     <td>
@@ -279,6 +275,15 @@ function PrintRecipe(props) {
                     </div>
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
         </div>
     );
 

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Button } from "react-bootstrap";
 import ReactToPrint from "react-to-print";
+import { ReactComponent as Logo } from './../getBakingLogo.svg';
 
 export default function PrintComponent(data) {
   let componentRef = useRef(data);
@@ -24,34 +25,166 @@ export default function PrintComponent(data) {
   );
 }
 
+
+
 // component to be printed
 class ComponentToPrint extends React.Component {
   state = {
     recipeData: [],
-    instructions:[]
+    listOfIngredients: [],
+    listOfInstructions: [],
   }
-  componentDidMount = async () => {
+  componentDidMount() {
     const data = localStorage.getItem("printData")
-    console.log(data);
     if (data) {
       const parsedData = JSON.parse(data);
-      this.setState({ recipeData: parsedData.data })
-      console.log(this.state.recipeData);
+      this.setState({
+        recipeData: parsedData.data
+      })
+      this.setState({ listOfIngredients: parsedData.data.recipesIngredients })
+      this.setState({listOfInstructions:parsedData.data.recipesSteps})
+
+
+
+
     }
   }
 
 
 
+
+
   render() {
     return (
-      <div>
-        <h2 style={{ color: "green" }}></h2>
-        
-        <div className="" style={{whiteSpace:"pre-line"}}>
-          
+      <div className="print">
+        <div className="row" >
+
+          <div className="col-3 pt-4">
+            <div className="row">
+              <div className="col-2">
+              </div>
+
+
+              <div className="col-8">
+
+
+                <div className="row text-center rounded">
+                  <Logo className="d-flex align-items-center text-center" style={{ height: "150%" }}></Logo>
+                </div>
+
+
+
+                <div className="pt-4">
+                  <div className="row text-center rounded" style={{ backgroundColor: "#ffff80", height: "4rem" }}>
+                    <div className="pt-1 fs-6 fw-light">
+                      Servings
+                    </div>
+                    <div className="fs-5 fw-bold" style={{ color: "#ff80c4" }}>
+                      {this.state.recipeData.recipesYield}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <div className="row text-center rounded" style={{ backgroundColor: "#ffff80", height: "4rem" }}>
+                    <div className="pt-1 fs-6 fw-light">
+                      Prep Time
+                    </div>
+                    <div className="fs-5 fw-bold" style={{ color: "#ff80c4" }}>
+                      {this.state.recipeData.recipesPrepTime}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <div className="row text-center rounded" style={{ backgroundColor: "#ffff80", height: "4rem" }}>
+                    <div className="pt-1 fs-6 fw-light">
+                      Cook Time
+                    </div>
+                    <div className="fs-5 fw-bold" style={{ color: "#ff80c4" }}>
+                      {this.state.recipeData.recipesCookTime}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <div className="row text-center rounded" style={{ backgroundColor: "#ffff80", height: "4rem" }}>
+                    <div className="pt-1 fs-6 fw-light">
+                      Difficulty
+                    </div>
+                    <div className="fs-5 fw-bold" style={{ color: "#ff80c4" }}>
+                      {this.state.recipeData.recipesDifficulty}
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+
+
+              <div className="col-2">
+              </div>
+            </div>
+          </div>
+
+
+          <div className="col-9 pt-4" style={{ paddingLeft: "0px" }}>
+            <img className="border img-fluid w-100"
+              src={this.state.recipeData.recipesImage}
+              style={{
+                height: "30rem",
+                position: "center",
+                objectFit: "cover",
+              }}>
+            </img>
+          </div>
+
+
+
         </div>
-        <div className="" style={{whiteSpace:"pre-line"}}>
-          
+
+        <div className="pt-3">
+          <div className="container-fluid">
+            <div className="container-fluid rounded text-center fs-1 fw-normal text-light d-flex align-items-center justify-content-center" style={{ backgroundColor: "#ff80c4", height: "5rem" }}>
+              {this.state.recipeData.recipesName}
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-3">
+          <div className="row">
+
+            <div className="col-8">
+
+            </div>
+
+            <div className="col-4">
+
+              <div className="fs-4 fw-bold text-center">
+
+              </div>
+
+              <div className="pt-3">
+
+
+               
+                {this.state.listOfIngredients.map((ingredient, index) => (
+                  <div key={index}>
+
+                    <div>
+                      {ingredient.ingredientName}
+                    </div>
+                  </div>
+
+                ))}
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
 
