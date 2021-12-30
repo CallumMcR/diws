@@ -13,7 +13,7 @@ function Contact() {
           style={{ position: "relative", top: "0", left: "0", right: "0" }}
         >
           <div className="row" style={{ color: "#ff80c4", backgroundColor: "rgba(255,255,128,0.4)" }}>
-            <div className="col-2" style={{ color: "#ff80c4" }}>
+            <div className="col-lg-2" style={{ color: "#ff80c4" }}>
 
             </div>
             <div className="col-lg-5 fs-1 fw-bold pt-5" style={{ color: "#ff80c4" }}>
@@ -39,7 +39,7 @@ function Contact() {
       </div>
       <div className="container-fluid p-0">
         <div className="row">
-          <div className="col-lg-2">
+          <div className="col-2">
 
           </div>
 
@@ -49,11 +49,19 @@ function Contact() {
 
               <div className="col-lg-6">
                 <div className="container-fluid border rounded-3"
-                  style={{ position: "relative", top: "-40%", backgroundColor: "white" }}>
+                  style={{ position: "relative", top: "-10%", backgroundColor: "white" }}>
                   <div className="container-fluid text-center">
                     <i className="bi bi-envelope-fill fs-1"></i>
                     <div className="fs-3">
                       Email us
+                    </div>
+                    <div className="fs-5">
+                      Have a query or a proposal?<br></br>
+                      Contact us at:
+
+                    </div>
+                    <div className="fs-3 py-4" style={{ color: "#ff80c4" }}>
+                      support@getbaking.com
                     </div>
                   </div>
                 </div>
@@ -62,11 +70,19 @@ function Contact() {
 
               <div className="col-lg-6">
                 <div className="container-fluid border rounded-3"
-                  style={{ position: "relative", top: "-40%", backgroundColor: "white" }}>
+                  style={{ position: "relative", top: "-10%", backgroundColor: "white" }}>
                   <div className="container-fluid text-center">
                     <i className="bi bi-chat-text-fill fs-1"></i>
                     <div className="fs-3">
                       Call us
+                    </div>
+                    <div className="fs-5">
+                      Have a query or a proposal?<br></br>
+                      Call us at:
+
+                    </div>
+                    <div className="fs-3 py-4" style={{ color: "#ff80c4" }}>
+                      +44 20 3230 1231
                     </div>
                   </div>
                 </div>
@@ -77,8 +93,7 @@ function Contact() {
           </div>
 
 
-          <div className="col-lg-2">
-
+          <div className="col-2">
           </div>
         </div>
       </div>
