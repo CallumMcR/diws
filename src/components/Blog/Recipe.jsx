@@ -20,19 +20,39 @@ class Recipe extends React.Component {
     listOfNutrients: [],
     activeAuthor: [],
     socialMediaLinks: [],
-  }// All the arrays in the active recipe are set as states, as otherwise
-  // The mapping will try to read the data before it has been mounted
+    relatedRecipes: []
+  }
 
 
   componentDidMount = async () => {
     const idNum = (this.props.params).uuid;
     const req = await fetch(`https://diws-backup-mod00.free.beeceptor.com/recipes`);
     const res = await req.json();
+    var relatedRecipes = [];
+    var recipeCategoriesToMatch = [];
+
     res.recipes.forEach((displayRecipe) => {
       if (displayRecipe.id == idNum) {
         this.setState({ activeRecipe: displayRecipe });
+        recipeCategoriesToMatch = displayRecipe.categories;
       }
     });
+
+
+    res.recipes.map((recipe) => { // This is for generating related recipes based on matching categories
+      var notAlreadyInList = true
+      recipe.categories.map((category) => {
+        if (recipeCategoriesToMatch.includes(category) && notAlreadyInList == true) { // If we don't want to check the same recipe again
+          relatedRecipes.push(recipe);
+          notAlreadyInList = false
+        }
+      });
+    });
+    relatedRecipes.slice(0, 6);
+    this.setState({ relatedRecipes: relatedRecipes })
+
+
+
 
     const requestAuthors = await fetch(`https://diws-backup-mod00.free.beeceptor.com/authors`);
     const responseAuthors = await requestAuthors.json();
@@ -41,6 +61,13 @@ class Recipe extends React.Component {
         this.setState({ activeAuthor: individualAuthor });
       }
     });
+
+
+    // Set state has been used for each individual array that is nested within the main recipe array.
+    // This is because the program is unable to map it direct from the parent array.
+    // State is an async method, and because of this, all usage of state has to be done in componentDidMount
+    // to ensure the data is stored before its rendered
+
     this.setState({ socialMediaLinks: this.state.activeAuthor.sociallinks });
 
     this.setState({ listOfInstructions: this.state.activeRecipe.instructions });
@@ -400,8 +427,7 @@ class Recipe extends React.Component {
                       <div key={index} className="row container-fluid align-items-center text-center">
 
 
-                        {console.log(link.facebook)}
-                        {console.log(link.twitter)}
+
                         {(link.facebook !== 'undefined' && link.facebook !== null) &&
                           <div className="col-4 align-items-center text-center">
                             <button id="myFacebook" className="btn" style={{ color: "#ff80c4" }} name="facebook" onClick={() => window.open(link.facebook)}
@@ -413,7 +439,7 @@ class Recipe extends React.Component {
                           </div>
                         }
 
-                        { (link.instagram !== 'undefined' && link.instagram !== null) &&
+                        {(link.instagram !== 'undefined' && link.instagram !== null) &&
                           <div className="col-4">
                             <button id="myInstagram" className="btn" style={{ color: "#ff80c4" }} name="instagram" onClick={() => window.open(link.instagram)}
                             >
@@ -464,60 +490,89 @@ class Recipe extends React.Component {
 
             </div>
 
+            {/* Related Recipes display */}
+
+
+            {/*this.state.relatedRecipes.map((recipe, index) => { // This is for generating related recipes based on matching categories
+              })*/}
+
+
 
             <div className="col-lg-4 rounded" style={{ backgroundColour: "white" }}>
+
 
 
               <div className="container-fluid rounded py-5"
                 style={{ backgroundColor: "white", marginleft: "0px", marginright: "0px" }}>
 
-                <div className="row border border-3 rounded" style={{ bordercolor: "#ff80c4" }}>
 
 
-                  <div className="row container-fluid py-2 rounded justify-content-center"
-                    style={{ marginright: "0px", marginleft: "0px", paddingright: "0px", paddingleft: "0px" }}>
+
+                {this.state.relatedRecipes.map((recipe, index) => {
 
 
-                    <div className="col-xl-5">
-                      <img src="pictures/chocolateCake/chococake1.jpg" className="float-start img-thumbnail"
-                        alt="Thumbnail"
-                        style={{ width: "150px", height: "150px", minwidth: "50px", minheight: "50px", padding: "0px" }} />
+
+
+
+                  <div className="row border border-3 rounded" style={{ bordercolor: "#ff80c4" }}>
+
+
+
+
+
+
+
+                    <div className="row container-fluid py-2 rounded justify-content-center"
+                      style={{ marginright: "0px", marginleft: "0px", paddingright: "0px", paddingleft: "0px" }}>
+
+
+                      <div className="col-xl-5">
+                        <img src={`${recipe.thumbnail}`} className="float-start img-thumbnail"
+                          alt="Thumbnail"
+                          style={{ width: "150px", height: "150px", minwidth: "50px", minheight: "50px", padding: "0px" }} />
+                      </div>
+
+
+                      <div className="col-7 text-start" style={{ paddingleft: "0px" }}>
+                        <div className="container py-1 text-start fw-bold" style={{ paddingleft: "12px" }}>
+                          {recipe.name.length <= 15 ? `${recipe.name}` :
+                            `${recipe.name.substring(0, 13)}...`}
+                        </div>
+                        <div className="container py-1 text-start fw-light" style={{ paddingleft: "12px" }}>
+                          {recipe.decription.length <= 40 ? `${recipe.description}` :
+                            `${recipe.description.substring(0, 36)}...`}
+                        </div>
+
+
+
+                        <div className="row container-fluid rounded align-items-center"
+                          style={{ paddingright: "0px" }}>
+                          <div className="col-md-7 text-start">
+                            {recipe.author}
+
+                          </div>
+                          
+                        </div>
+
+
+                      </div>
+
                     </div>
 
 
-                    <div className="col-7 text-start" style={{ paddingleft: "0px" }}>
-                      <div className="container py-1 text-start fw-bold" style={{ paddingleft: "12px" }}>
-                        Chocolate Cake
-                      </div>
-                      <div className="container py-1 text-start fw-light" style={{ paddingleft: "12px" }}>
-                        Triple layered Chocolate Cake of wonders and fun
-                      </div>
-
-
-
-                      <div className="row container-fluid rounded align-items-center"
-                        style={{ paddingright: "0px" }}>
-                        <div className="col-md-7 text-start">
-                          Author Name
-
-                        </div>
-                        <div className="col-5">
-                          <img src="pictures/userProfile/blankUserImg.png"
-                            className="rounded-circle float-end img-responsive"
-                            alt="author" style={{ width: "60px", height: "60px" }} />
-                        </div>
-
-                      </div>
-
-
-                    </div>
 
                   </div>
 
 
+                })}
 
-                </div>
+
+
+
+
+
               </div>
+
             </div>
 
 
