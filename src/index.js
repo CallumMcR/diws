@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {
   Navigation,
-  Footer,
   Home,
   About,
   Contact,
@@ -28,7 +27,6 @@ ReactDOM.render(
       <Route path="recipes/CreateRecipe/" element={<CreateRecipe />} />
       <Route path="recipes/recipe/print/" element={<PrintRecipe  />} />
     </Routes>
-    <Footer />
   </Router>,
 
   document.getElementById("root")

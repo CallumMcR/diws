@@ -227,10 +227,10 @@ class Recipes extends React.Component {
 
   render() {
     return (
-      <div className="home">
+      <div className="home" >
 
-        <div className="text-dark p-5 text-center" style={{ backgroundColor: "whitesmoke" }}>
-          <div className="container-fluid d-flex-row rounded" style={{ backgroundColor: "white" }}>
+        <div className="text-dark p-5 text-center">
+          <div className="container-fluid d-flex-row rounded">
             <div className="row pt-3 align-items-center d-flex">
               <div className="col-3">
                 <div className="row">
