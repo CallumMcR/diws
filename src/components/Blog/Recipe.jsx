@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { Carousel } from "react-bootstrap";
 import moment from "moment";
+import { Link, useNavigate } from "react-router-dom";
 
 function Capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
