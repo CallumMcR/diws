@@ -511,58 +511,55 @@ class Recipe extends React.Component {
                 {this.state.relatedRecipes.map((recipe, index) => {
 
 
+                  <Link style={{ textDecoration: 'none' }}
+                    to={{
+                      pathname: `recipe/${recipe.id}`,
+                      state: { recipe: recipe.id }
+                    }}>
+
+                    <div className="row border border-3 rounded" style={{ bordercolor: "#ff80c4" }}>
+
+                      <div className="row container-fluid py-2 rounded justify-content-center"
+                        style={{ marginright: "0px", marginleft: "0px", paddingright: "0px", paddingleft: "0px" }}>
 
 
-
-                  <div className="row border border-3 rounded" style={{ bordercolor: "#ff80c4" }}>
-
-
-
-
-
-
-
-                    <div className="row container-fluid py-2 rounded justify-content-center"
-                      style={{ marginright: "0px", marginleft: "0px", paddingright: "0px", paddingleft: "0px" }}>
-
-
-                      <div className="col-xl-5">
-                        <img src={`${recipe.thumbnail}`} className="float-start img-thumbnail"
-                          alt="Thumbnail"
-                          style={{ width: "150px", height: "150px", minwidth: "50px", minheight: "50px", padding: "0px" }} />
-                      </div>
-
-
-                      <div className="col-7 text-start" style={{ paddingleft: "0px" }}>
-                        <div className="container py-1 text-start fw-bold" style={{ paddingleft: "12px" }}>
-                          {recipe.name.length <= 15 ? `${recipe.name}` :
-                            `${recipe.name.substring(0, 13)}...`}
-                        </div>
-                        <div className="container py-1 text-start fw-light" style={{ paddingleft: "12px" }}>
-                          {recipe.decription.length <= 40 ? `${recipe.description}` :
-                            `${recipe.description.substring(0, 36)}...`}
+                        <div className="col-xl-5">
+                          <img src={`${recipe.thumbnail}`} className="float-start img-thumbnail"
+                            alt="Thumbnail"
+                            style={{ width: "150px", height: "150px", minwidth: "50px", minheight: "50px", padding: "0px" }} />
                         </div>
 
 
+                        <div className="col-7 text-start" style={{ paddingleft: "0px" }}>
+                          <div className="container py-1 text-start fw-bold" style={{ paddingleft: "12px" }}>
+                            {recipe.name.length <= 15 ? `${recipe.name}` :
+                              `${recipe.name.substring(0, 13)}...`}
+                          </div>
+                          <div className="container py-1 text-start fw-light" style={{ paddingleft: "12px" }}>
+                            {recipe.decription.length <= 40 ? `${recipe.description}` :
+                              `${recipe.description.substring(0, 36)}...`}
+                          </div>
 
-                        <div className="row container-fluid rounded align-items-center"
-                          style={{ paddingright: "0px" }}>
-                          <div className="col-md-7 text-start">
-                            {recipe.author}
+
+
+                          <div className="row container-fluid rounded align-items-center"
+                            style={{ paddingright: "0px" }}>
+                            <div className="col-md-7 text-start">
+                              {recipe.author}
+
+                            </div>
 
                           </div>
-                          
-                        </div>
 
+
+                        </div>
 
                       </div>
 
+
+
                     </div>
-
-
-
-                  </div>
-
+                  </Link>
 
                 })}
 
