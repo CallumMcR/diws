@@ -19,7 +19,8 @@ function Home() {
                     backgroundColor: "rgba(0,0,0,0.5)", height: "32rem", position: "relative",
                     backgroundPosition: "center", backgroundSize: "cover"
                 }}>
-                    <div className="container-fluid align-items-center text-light pb-3" style={{ position: "absolute", bottom: "0", left: "0", right: "0" }}
+                    <div className="container-fluid align-items-center text-light pb-3" 
+                    style={{ position: "absolute", bottom: "0", left: "0", right: "0" }}
                     >
                         <div className="row">
                             <div className="col-2">

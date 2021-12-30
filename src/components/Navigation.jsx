@@ -66,11 +66,7 @@ function Navigation() {
                                         </NavLink>
                                     </li>
                                 </ul>
-                                <div className="h-100 px-2 d-flex align-items-center">
-                                    <input className="form-control" type="search"
-                                        placeholder="Search..">
-                                    </input>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -80,18 +76,18 @@ function Navigation() {
                 <hr style={{ marginTop: "0%", color: "whitesmoke", marginBottom: "0%" }}></hr>
                 <div className="container-fluid d-lg-none justify-content-center">
                     <div className="row">
-                        <button to="/" className="btn px-5 col-3" style={{ color: "white" }}>
+                        <NavLink to="/" className="btn px-5 col-3" style={{ color: "white" }}>
                             HOME
-                        </button>
-                        <button to="/about" className="btn px-5 col-3" style={{ color: "white" }}>
+                        </NavLink>
+                        <NavLink to="/about" className="btn px-5 col-3" style={{ color: "white" }}>
                             ABOUT
-                        </button>
-                        <button to="/recipes/" className="btn px-5 col-3" style={{ color: "white" }}>
+                        </NavLink>
+                        <NavLink to="/recipes/" className="btn px-5 col-3" style={{ color: "white" }}>
                             RECIPES
-                        </button>
-                        <button to="/contact" className="btn px-5 col-3" style={{ color: "white" }}>
+                        </NavLink>
+                        <NavLink to="/contact" className="btn px-5 col-3" style={{ color: "white" }}>
                             CONTACT
-                        </button>
+                        </NavLink>
                     </div>
                 </div>
             </div>
