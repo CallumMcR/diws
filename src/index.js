@@ -23,7 +23,7 @@ ReactDOM.render(
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/recipes/" element={<Recipes />} />
-      <Route path="recipes/recipe/:uuid" element={<Recipe />} />
+      <Route exact path="recipes/recipe/:uuid" element={<Recipe />} />
       <Route path="recipes/CreateRecipe/" element={<CreateRecipe />} />
       <Route path="recipes/recipe/print/" element={<PrintRecipe  />} />
     </Routes>

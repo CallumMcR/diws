@@ -8,6 +8,11 @@ function Capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+
+
+const authorAPI = `https://getbakingapitest2.free.beeceptor.com/authors`
+const recipesAPI = `https://getbakingapitest2.free.beeceptor.com/recipes`
+
 class Recipe extends React.Component {
 
   state = {
@@ -25,9 +30,67 @@ class Recipe extends React.Component {
   }
 
 
+  componentDidUpdate = async () => {
+    if (this.state.activeRecipe.id !== this.props.params.uuid) {
+      console.log("Update was done");
+      var nextID = this.props.params.uuid; // from the new url
+      var relatedRecipes = [];
+      var recipeCategoriesToMatch = [];
+      const req = await fetch(recipesAPI);
+      const res = await req.json();
+      res.recipes.forEach((displayRecipe) => {
+        if (displayRecipe.id == nextID) {
+          this.setState({ activeRecipe: displayRecipe });
+          recipeCategoriesToMatch = displayRecipe.categories;
+        }
+      });
+      res.recipes.map((recipe) => { // This is for generating related recipes based on matching categories
+        var notAlreadyInList = true
+        recipe.categories.map((category) => {
+          if (recipeCategoriesToMatch.includes(category) && notAlreadyInList == true && recipe.id != nextID) { // If we don't want to check the same recipe again
+            relatedRecipes.push(recipe);
+            notAlreadyInList = false
+          }
+        });
+      });
+      relatedRecipes.slice(0, 6);
+      this.setState({ relatedRecipes: relatedRecipes })
+
+      const requestAuthors = await fetch(authorAPI);
+      const responseAuthors = await requestAuthors.json();
+      responseAuthors.forEach((individualAuthor) => {
+        if (individualAuthor.user == this.state.activeRecipe.author) {
+          this.setState({ activeAuthor: individualAuthor });
+        }
+      });
+
+
+      // Set state has been used for each individual array that is nested within the main recipe array.
+      // This is because the program is unable to map it direct from the parent array.
+      // State is an async method, and because of this, all usage of state has to be done in componentDidMount
+      // to ensure the data is stored before its rendered
+
+      this.setState({ socialMediaLinks: this.state.activeAuthor.sociallinks });
+
+      this.setState({ listOfInstructions: this.state.activeRecipe.instructions });
+      this.setState({ listOfSteps: this.state.listOfInstructions[0].steps });
+
+      if (this.state.activeRecipe.secondaryinstructions.length > 0) {
+        this.setState({ listOfAdditionalInstructions: this.state.activeRecipe.secondaryinstructions })
+        this.setState({ listOfAdditionalSteps: this.state.listOfAdditionalInstructions[0].steps })
+      }
+      this.setState({ listOfIngredients: this.state.activeRecipe.ingredients });
+      this.setState({ listOfImages: this.state.activeRecipe.images });
+      this.setState({ listOfNutrients: this.state.activeRecipe.nutrition });
+    }
+
+
+
+  }
+
   componentDidMount = async () => {
     const idNum = (this.props.params).uuid;
-    const req = await fetch(`https://diws-backup-mod00.free.beeceptor.com/recipes`);
+    const req = await fetch(recipesAPI);
     const res = await req.json();
     var relatedRecipes = [];
     var recipeCategoriesToMatch = [];
@@ -43,7 +106,7 @@ class Recipe extends React.Component {
     res.recipes.map((recipe) => { // This is for generating related recipes based on matching categories
       var notAlreadyInList = true
       recipe.categories.map((category) => {
-        if (recipeCategoriesToMatch.includes(category) && notAlreadyInList == true) { // If we don't want to check the same recipe again
+        if (recipeCategoriesToMatch.includes(category) && notAlreadyInList == true && recipe.id != idNum) { // If we don't want to check the same recipe again
           relatedRecipes.push(recipe);
           notAlreadyInList = false
         }
@@ -55,7 +118,7 @@ class Recipe extends React.Component {
 
 
 
-    const requestAuthors = await fetch(`https://diws-backup-mod00.free.beeceptor.com/authors`);
+    const requestAuthors = await fetch(authorAPI);
     const responseAuthors = await requestAuthors.json();
     responseAuthors.forEach((individualAuthor) => {
       if (individualAuthor.user == this.state.activeRecipe.author) {
@@ -494,27 +557,24 @@ class Recipe extends React.Component {
             {/* Related Recipes display */}
 
 
-            {/*this.state.relatedRecipes.map((recipe, index) => { // This is for generating related recipes based on matching categories
-              })*/}
-
-
-
             <div className="col-lg-4 rounded" style={{ backgroundColour: "white" }}>
 
 
-
-              <div className="container-fluid rounded py-5"
-                style={{ backgroundColor: "white", marginleft: "0px", marginright: "0px" }}>
-
-
+              {this.state.relatedRecipes.map((recipe, index) => (
+                <div className="container-fluid rounded py-2" key={index}
+                  style={{ backgroundColor: "white", marginleft: "0px", marginright: "0px" }}>
 
 
-                {this.state.relatedRecipes.map((recipe, index) => {
 
 
-                  <Link style={{ textDecoration: 'none' }}
+
+
+
+                  <Link
+
+                    style={{ textDecoration: 'none' }}
                     to={{
-                      pathname: `recipe/${recipe.id}`,
+                      pathname: `/recipes/recipe/${recipe.id}`,
                       state: { recipe: recipe.id }
                     }}>
 
@@ -537,7 +597,7 @@ class Recipe extends React.Component {
                               `${recipe.name.substring(0, 13)}...`}
                           </div>
                           <div className="container py-1 text-start fw-light" style={{ paddingleft: "12px" }}>
-                            {recipe.decription.length <= 40 ? `${recipe.description}` :
+                            {recipe.description.length <= 40 ? `${recipe.description}` :
                               `${recipe.description.substring(0, 36)}...`}
                           </div>
 
@@ -562,15 +622,15 @@ class Recipe extends React.Component {
                     </div>
                   </Link>
 
-                })}
 
 
 
 
 
 
-              </div>
 
+                </div>
+              ))}
             </div>
 
 
