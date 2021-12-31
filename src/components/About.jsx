@@ -3,14 +3,14 @@ import { ReactComponent as Logo } from './getBakingLogo.svg';
 function About() {
   return (
     <div className="about">
-      <div className="container-fluid px-5" style={{ backgroundColor: "white" }}>
+      <div className="container-fluid" style={{ backgroundColor: "white" }}>
         <div className="container-fluid p-5" style={{
           borderRadius: "15px"
         }}>
 
           <div className="d-sm-flex row">
-            <div className="col-lg-9 p-2">
-              <div className="px-5">
+            <div className="col-lg-9 px-5">
+
                 <h1 className="pb-3 text-decoration-underline">Get Baking</h1>
                 <p className="fs-5 text-start">
                   We are a small group of people who have a passion and love for food,
@@ -29,7 +29,7 @@ function About() {
                   so you, and anyone you share us with is able to relish the taste too.
                 </div>
                 
-              </div>
+          
             </div>
             <div className="col-lg-3 border rounded p-2 text-center" style={{ backgroundColor: "#ffff80" }}>
 

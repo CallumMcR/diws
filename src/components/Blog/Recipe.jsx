@@ -153,7 +153,7 @@ class Recipe extends React.Component {
     return (
       <div className="home">
 
-        <div className="text-dark p-5 text-center" style={{ backgroundColor: "white" }}>
+        <div className="text-dark text-center" style={{ backgroundColor: "white" }}>
           <div className="container-fluid row d-flex">
 
             <div className="col-lg-8 align-items-center rounded py-3" style={{ backgroundColour: "white" }}>
@@ -173,13 +173,13 @@ class Recipe extends React.Component {
           <div className="container-fluid row">
 
 
-            <div className="col-lg-8 align-items-center rounded py-3" style={{ backgroundColour: "white" }}>
+            <div className="col-lg-8 align-items-center rounded py-3 px-0" style={{ backgroundColour: "white" }}>
 
 
               <div className="py-3 container-fluid justify-content-center align-items-center d-flex"
                 style={{ backgroundColour: "white" }}>
 
-                <div className="container-fluid">
+                <div className="container-fluid px-0">
 
 
 
@@ -216,13 +216,13 @@ class Recipe extends React.Component {
                   <div className="container-fluid border text-center border-top-0 rounded-bottom">
 
                     <div className="row pt-2 fs-5 text-center">
-                      <div className="col-4">
+                      <div className="col-lg-4">
                         Preperation Time: {moment(this.state.activeRecipe.preptime, ["hmm", "mm", "h"]).format("HH:mm")}
                       </div>
-                      <div className="col-4 fw-bold">
+                      <div className="col-lg-4 fw-bold">
                         Difficulty: {this.state.activeRecipe.difficulty}
                       </div>
-                      <div className="col-4">
+                      <div className="col-lg-4">
                         Cook Time: {moment(this.state.activeRecipe.cooktime, ["hmm", "mm", "h"]).format("HH:mm")}
                       </div>
                     </div>
@@ -241,61 +241,62 @@ class Recipe extends React.Component {
                     <div className="text-center fs-5 pt-2 pb-4 fw-bold text-decoration-underline">
                       Nutritional values
                     </div>
-
-                    <table className="table table-striped table-hover border">
-                      <thead>
-                        <tr>
-                          <th scope="col">Serving</th>
-                          <th scope="col">Calories</th>
-                          <th scope="col">Fat</th>
-                          <th scope="col">Saturate</th>
-                          <th scope="col">Carbohydrates</th>
-                          <th scope="col">Sugars</th>
-                          <th scope="col">Fibre</th>
-                          <th scope="col">Protein</th>
-                          <th scope="col">Salt</th>
-
-                        </tr>
-                      </thead>
-                      <tbody>
-
-                        {this.state.listOfNutrients.map((nutrient, index) => (
-                          <tr key={index}>
-                            <td>
-                              {Capitalize(nutrient.serving)}
-
-                            </td>
-                            <td>
-                              {nutrient.kcal}
-                            </td>
-                            <td>
-                              {nutrient.fat}
-                            </td>
-                            <td>
-                              {nutrient.saturates}
-                            </td>
-                            <td>
-                              {nutrient.carbs}
-                            </td>
-                            <td>
-                              {nutrient.sugars}
-                            </td>
-                            <td>
-                              {nutrient.fibre}
-                            </td>
-                            <td>
-                              {nutrient.protein}
-                            </td>
-                            <td>
-                              {nutrient.salt}
-                            </td>
+                    <div className="table-responsive">
+                      <table className="table table-striped table-hover border">
+                        <thead>
+                          <tr>
+                            <th scope="col">Serving</th>
+                            <th scope="col">Calories</th>
+                            <th scope="col">Fat</th>
+                            <th scope="col">Saturate</th>
+                            <th scope="col">Carbohydrates</th>
+                            <th scope="col">Sugars</th>
+                            <th scope="col">Fibre</th>
+                            <th scope="col">Protein</th>
+                            <th scope="col">Salt</th>
 
                           </tr>
+                        </thead>
+                        <tbody>
 
-                        ))}
+                          {this.state.listOfNutrients.map((nutrient, index) => (
+                            <tr key={index}>
+                              <td>
+                                {Capitalize(nutrient.serving)}
 
-                      </tbody>
-                    </table>
+                              </td>
+                              <td>
+                                {nutrient.kcal}
+                              </td>
+                              <td>
+                                {nutrient.fat}
+                              </td>
+                              <td>
+                                {nutrient.saturates}
+                              </td>
+                              <td>
+                                {nutrient.carbs}
+                              </td>
+                              <td>
+                                {nutrient.sugars}
+                              </td>
+                              <td>
+                                {nutrient.fibre}
+                              </td>
+                              <td>
+                                {nutrient.protein}
+                              </td>
+                              <td>
+                                {nutrient.salt}
+                              </td>
+
+                            </tr>
+
+                          ))}
+
+                        </tbody>
+                      </table>
+                    </div>
 
                   </div>
 
@@ -333,43 +334,45 @@ class Recipe extends React.Component {
                           data-bs-parent="#accordionFlushIngredients">
 
                           <div className="accordion-body rounded">
-                            <table className="table table-striped table-hover border">
-                              <thead>
-                                <tr>
-                                  <th scope="col">Ingredient</th>
-                                  <th scope="col">Measurement</th>
-                                  <th scope="col">Notes</th>
+                            <div className="table-responsive">
+                              <table className="table table-striped table-hover border">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Ingredient</th>
+                                    <th scope="col">Measurement</th>
+                                    <th scope="col">Notes</th>
 
-                                </tr>
-                              </thead>
-                              <tbody>
-
-                                {this.state.listOfIngredients.map((ingredient, index) => (
-                                  <tr key={index}>
-                                    <td>
-                                      {Capitalize(ingredient.ingredient) == true ? `${Capitalize(ingredient.ingredient)}` :
-                                        `${Capitalize(ingredient.ingredient)}`}
-
-                                    </td>
-                                    <td>
-                                      {ingredient.measurementweight && ingredient.measurementtype ? `${ingredient.measurementweight}${ingredient.measurementtype}` :
-                                        (ingredient.measurementsize == null ? `N/A` : `${ingredient.measurementsize}`)}
-                                    </td>
-
-
-
-                                    <th>
-
-                                      {ingredient.note != null ? `${Capitalize(ingredient.note)}` :
-                                        `N/A`}
-
-                                    </th>
                                   </tr>
+                                </thead>
+                                <tbody>
 
-                                ))}
+                                  {this.state.listOfIngredients.map((ingredient, index) => (
+                                    <tr key={index}>
+                                      <td>
+                                        {Capitalize(ingredient.ingredient) == true ? `${Capitalize(ingredient.ingredient)}` :
+                                          `${Capitalize(ingredient.ingredient)}`}
 
-                              </tbody>
-                            </table>
+                                      </td>
+                                      <td>
+                                        {ingredient.measurementweight && ingredient.measurementtype ? `${ingredient.measurementweight}${ingredient.measurementtype}` :
+                                          (ingredient.measurementsize == null ? `N/A` : `${ingredient.measurementsize}`)}
+                                      </td>
+
+
+
+                                      <th>
+
+                                        {ingredient.note != null ? `${Capitalize(ingredient.note)}` :
+                                          `N/A`}
+
+                                      </th>
+                                    </tr>
+
+                                  ))}
+
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
 
                         </div>
@@ -478,78 +481,81 @@ class Recipe extends React.Component {
                     </div>
 
                   </div>
+                  <div className="py-3">
+                  </div>
+                  <div className="border rounded border-3 bg-light">
+                    <div className="row">
 
-
-                </div>
-              </div>
-
-              <div className="border rounded border-3 bg-light">
-                <div className="row">
-
-                  <div className="col-xl-7 text-center align-items-center d-flex">
-                    {this.state.socialMediaLinks.map((link, index) => (
-                      <div key={index} className="row container-fluid align-items-center text-center">
+                      <div className="col-lg-7 text-center align-items-center d-flex">
+                        {this.state.socialMediaLinks.map((link, index) => (
+                          <div key={index} className="row container-fluid align-items-center text-center">
 
 
 
-                        {(link.facebook !== 'undefined' && link.facebook !== null) &&
-                          <div className="col-4 align-items-center text-center">
-                            <button id="myFacebook" className="btn" style={{ color: "#ff80c4" }} name="facebook" onClick={() => window.open(link.facebook)}
-                            >
-                              <div className="bi bi-facebook"></div>
-                              FaceBook
-                            </button>
+                            {(link.facebook !== 'undefined' && link.facebook !== null) &&
+                              <div className="col-4 align-items-center text-center">
+                                <button id="myFacebook" className="btn" style={{ color: "#ff80c4" }} name="facebook" onClick={() => window.open(link.facebook)}
+                                >
+                                  <div className="bi bi-facebook"></div>
+                                  FaceBook
+                                </button>
 
+                              </div>
+                            }
+
+                            {(link.instagram !== 'undefined' && link.instagram !== null) &&
+                              <div className="col-4">
+                                <button id="myInstagram" className="btn" style={{ color: "#ff80c4" }} name="instagram" onClick={() => window.open(link.instagram)}
+                                >
+                                  <div className="bi bi-instagram"></div>
+                                  Instagram
+                                </button>
+                              </div>
+                            }
+
+                            {(link.twitter !== 'undefined' && link.twitter !== null) &&
+                              <div className="col-4 align-items-center text-center">
+                                <button id="myTwitter" className="btn" style={{ color: "#ff80c4" }} name="twitter" onClick={() => window.open(link.twitter)}
+                                >
+                                  <div className="bi bi-twitter"></div>
+                                  Twitter
+                                </button>
+                              </div>
+                            }
                           </div>
-                        }
 
-                        {(link.instagram !== 'undefined' && link.instagram !== null) &&
-                          <div className="col-4">
-                            <button id="myInstagram" className="btn" style={{ color: "#ff80c4" }} name="instagram" onClick={() => window.open(link.instagram)}
-                            >
-                              <div className="bi bi-instagram"></div>
-                              Instagram
-                            </button>
-                          </div>
-                        }
 
-                        {(link.twitter !== 'undefined' && link.twitter !== null) &&
-                          <div className="col-4 align-items-center text-center">
-                            <button id="myTwitter" className="btn" style={{ color: "#ff80c4" }} name="twitter" onClick={() => window.open(link.twitter)}
-                            >
-                              <div className="bi bi-twitter"></div>
-                              Twitter
-                            </button>
-                          </div>
-                        }
+
+                        ))}
                       </div>
 
 
+                      <div className="col-lg-5 justify-content-around">
 
-                    ))}
-                  </div>
+                        <div className="container-fluid row align-items-center d-flex">
+                          <div className="col-8">
+                            <div className="text-center">
+                              Made by: <strong>{this.state.activeRecipe.author}</strong>
+                            </div>
+                          </div>
+                          <div className="col-3">
+                            <img src={this.state.activeAuthor.profileimage}
+                              className="rounded-circle float-end img-fluid" alt="author"
+                              style={{ width: "60px", height: "60px" }} />
 
+                          </div>
 
-                  <div className="col-xl-5 justify-content-around">
-
-                    <div className="container-fluid row align-items-center d-flex">
-                      <div className="col-8">
-                        <div className="text-center">
-                          Made by: <strong>{this.state.activeRecipe.author}</strong>
                         </div>
-                      </div>
-                      <div className="col-3">
-                        <img src={this.state.activeAuthor.profileimage}
-                          className="rounded-circle float-end img-fluid" alt="author"
-                          style={{ width: "60px", height: "60px" }} />
+
 
                       </div>
-
                     </div>
-
                   </div>
+
                 </div>
+
               </div>
+
 
 
             </div>
@@ -592,11 +598,11 @@ class Recipe extends React.Component {
 
 
                         <div className="col-7 text-start" style={{ paddingleft: "0px" }}>
-                          <div className="container py-1 text-start fw-bold text-dark" style={{ paddingleft: "12px",textDecoration:"none" }}>
+                          <div className="container py-1 text-start fw-bold text-dark" style={{ paddingleft: "12px", textDecoration: "none" }}>
                             {recipe.name.length <= 15 ? `${recipe.name}` :
                               `${recipe.name.substring(0, 13)}...`}
                           </div>
-                          <div className="container py-1 text-start fw-light text-dark" style={{ paddingleft: "12px",textDecoration:"none" }}>
+                          <div className="container py-1 text-start fw-light text-dark" style={{ paddingleft: "12px", textDecoration: "none" }}>
                             {recipe.description.length <= 40 ? `${recipe.description}` :
                               `${recipe.description.substring(0, 36)}...`}
                           </div>

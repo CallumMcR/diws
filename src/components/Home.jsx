@@ -65,8 +65,8 @@ function Home() {
 
 
 
-            <div className="container-fluid px-5" style={{ backgroundColor: "white" }}>
-                <div className="container-fluid p-5" style={{
+            <div className="container-fluid" style={{ backgroundColor: "white" }}>
+                <div className="container-fluid py-5" style={{
                     borderRadius: "15px"
                 }}>
 
