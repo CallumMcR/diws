@@ -172,10 +172,10 @@ function CreateRecipe() {
     return (
         <div style={{ overflow: "hidden" }}>
             <div className="row">
-                <div className="col-3">
+                <div className="col-lg-3">
 
                 </div>
-                <div className="col-6 text-center">
+                <div className="col-lg-6 text-center">
 
 
 
@@ -308,7 +308,7 @@ function CreateRecipe() {
                                 
                                 <div className="row align-items-center d-flex py-2" key={index}>
 
-                                    <div className="col-3">
+                                    <div className="col-lg-3">
 
 
                                         <input type="text"
@@ -322,7 +322,7 @@ function CreateRecipe() {
                                         {console.log(ingredients)}
 
                                     </div>
-                                    <div className="col-6">
+                                    <div className="col-lg-6">
                                         <InputGroup>
                                             <FormControl type="number"
                                                 className="form-control"
@@ -351,7 +351,7 @@ function CreateRecipe() {
 
 
 
-                                    <div className="col-3">
+                                    <div className="col-lg-3">
 
                                         <div className="row">
 
@@ -408,7 +408,7 @@ function CreateRecipe() {
                                 <div className="py-2 fs-5 fw-bold text-start">
                                     Step {index + 1}:
                                 </div>
-                                <div className="col-9">
+                                <div className="col-lg-9">
 
 
                                     <input type="text"
@@ -423,7 +423,7 @@ function CreateRecipe() {
                                     {console.log(instructions)}
                                 </div>
 
-                                <div className="col-3">
+                                <div className="col-lg-3">
 
                                     <div className="row">
 
@@ -510,7 +510,7 @@ function CreateRecipe() {
 
 
                 </div>
-                <div className="col-3">
+                <div className="col-lg-3">
 
                 </div>
             </div >
