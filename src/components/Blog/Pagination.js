@@ -9,8 +9,8 @@ const Pagination = ({ recipesPerPage, totalRecipes, paginate, curPage }) => {
     }
     return (
         <nav>
-            <ul className="pagination">
-                {curPage != 1 ?
+            <ul className="pagination justify-content-start">
+                {curPage !== 1 ?
                     <li className="page-item">
                         <button onClick={() => paginate(curPage - 1)}
                             className="page-link rounded-start">

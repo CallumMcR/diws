@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function Navigation() {
     return (
+
         <div className="navigation">
             <nav className="navbar navbar-expand-lg navbar-dark shadow-sm py-4"
                 style={{ backgroundColor: "#ff80c4" }}>
@@ -66,7 +67,7 @@ function Navigation() {
                                         </NavLink>
                                     </li>
                                 </ul>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -76,22 +77,23 @@ function Navigation() {
                 <hr style={{ marginTop: "0%", color: "whitesmoke", marginBottom: "0%" }}></hr>
                 <div className="container-fluid d-lg-none justify-content-center">
                     <div className="row">
-                        <NavLink to="/" className="btn px-5 col-3" style={{ color: "white" }}>
+                        <NavLink to="/" className="btn px-5 col-3-lg text-center" style={{ color: "white" }}>
                             HOME
                         </NavLink>
-                        <NavLink to="/about" className="btn px-5 col-3" style={{ color: "white" }}>
+                        <NavLink to="/about" className="btn px-5 col-3-lg" style={{ color: "white" }}>
                             ABOUT
                         </NavLink>
-                        <NavLink to="/recipes/" className="btn px-5 col-3" style={{ color: "white" }}>
+                        <NavLink to="/recipes/" className="btn px-5 col-3-lg" style={{ color: "white" }}>
                             RECIPES
                         </NavLink>
-                        <NavLink to="/contact" className="btn px-5 col-3" style={{ color: "white" }}>
+                        <NavLink to="/contact" className="btn px-5 col-3-lg" style={{ color: "white" }}>
                             CONTACT
                         </NavLink>
                     </div>
                 </div>
             </div>
         </div>
+
     );
 }
 

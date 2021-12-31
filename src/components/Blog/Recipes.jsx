@@ -230,54 +230,37 @@ class Recipes extends React.Component {
       <div className="home" >
 
         <div className="text-dark p-5 text-center">
-          <div className="container-fluid d-flex-row rounded">
+          <div className="container-fluid d-flex-row">
             <div className="row pt-3 align-items-center d-flex">
-              <div className="col-3">
-                <div className="row">
-                  <div className="col-3">
-
+              <div className="col-md-3">
+                <Link style={{ textDecoration: 'none' }}
+                  to={{
+                    pathname: `CreateRecipe/`
+                  }}>
+                  <div className="text-center fw-normal fs-6 form-control rounded-0 shadow-sm"
+                    >
+                    Create recipe
                   </div>
-                  <div className="col-6">
-                    <Link style={{ textDecoration: 'none' }}
-                      to={{
-                        pathname: `CreateRecipe/`
-                      }}>
-                      <button className="text-center fw-normal fs-5 form-control"
-                        type="button">
-                        Create recipe
-                      </button>
-                    </Link>
-                  </div>
-                  <div className="col-3">
-
-                  </div>
-                </div>
+                </Link>
               </div>
 
-              <div className="col-6">
+              <div className="col-md-6 py-2">
                 <Form getRecipe={this.getRecipe} />
               </div>
-              <div className="col-3">
-                <div className="row">
-                  <div className="col-3">
 
-                  </div>
-                  <div className="col-6">
-                    <FilterButton getRecipeByFilter={this.getRecipeByFilter} />
-                  </div>
-                  <div className="col-3">
-
-                  </div>
-                </div>
+              <div className="col-md-3">
+                <FilterButton getRecipeByFilter={this.getRecipeByFilter} />
               </div>
+
             </div>
+
             <hr></hr>
 
             <div className="row">
-              <div className="col-2">
+              <div className="col-lg-2">
 
               </div>
-              <div className="col-8">
+              <div className="col-lg-8">
 
 
                 <div className="row py-3">
@@ -372,7 +355,7 @@ class Recipes extends React.Component {
                   paginate={this.paginate}
                   curPage={this.state.currentPage} />
               </div>
-              <div className="col-2">
+              <div className="col-lg-2">
 
               </div>
             </div>
@@ -381,7 +364,7 @@ class Recipes extends React.Component {
 
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
