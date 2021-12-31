@@ -578,7 +578,7 @@ class Recipe extends React.Component {
                       state: { recipe: recipe.id }
                     }}>
 
-                    <div className="row border border-3 rounded" style={{ bordercolor: "#ff80c4" }}>
+                    <div className="row border border-3 rounded d-flex align-items-center">
 
                       <div className="row container-fluid py-2 rounded justify-content-center"
                         style={{ marginright: "0px", marginleft: "0px", paddingright: "0px", paddingleft: "0px" }}>
@@ -592,11 +592,11 @@ class Recipe extends React.Component {
 
 
                         <div className="col-7 text-start" style={{ paddingleft: "0px" }}>
-                          <div className="container py-1 text-start fw-bold" style={{ paddingleft: "12px" }}>
+                          <div className="container py-1 text-start fw-bold text-dark" style={{ paddingleft: "12px",textDecoration:"none" }}>
                             {recipe.name.length <= 15 ? `${recipe.name}` :
                               `${recipe.name.substring(0, 13)}...`}
                           </div>
-                          <div className="container py-1 text-start fw-light" style={{ paddingleft: "12px" }}>
+                          <div className="container py-1 text-start fw-light text-dark" style={{ paddingleft: "12px",textDecoration:"none" }}>
                             {recipe.description.length <= 40 ? `${recipe.description}` :
                               `${recipe.description.substring(0, 36)}...`}
                           </div>
