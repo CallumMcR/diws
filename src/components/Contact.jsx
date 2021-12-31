@@ -4,7 +4,7 @@ import contactImage from './contactusimage.png';
 function Contact() {
   return (
     <div className="contact">
-      <div className="container-fluid p-0" style={{
+      <div className="container-fluid p-0 d-inline" style={{
         height: "16rem", position: "relative", width: "auto"
 
       }}>
@@ -12,7 +12,7 @@ function Contact() {
         <div className="container-fluid text-light"
           style={{ position: "relative", top: "0", left: "0", right: "0" }}
         >
-          <div className="row" style={{ color: "#ff80c4", backgroundColor: "rgba(255,255,128,0.4)" }}>
+          <div className="row d-flex" style={{ color: "#ff80c4", backgroundColor: "rgba(255,255,128,0.4)" }}>
             <div className="col-lg-2" style={{ color: "#ff80c4" }}>
 
             </div>
