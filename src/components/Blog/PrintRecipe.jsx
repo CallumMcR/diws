@@ -13,7 +13,7 @@ function PrintRecipe(props) {
     return (
         <div>
 
-            <div className="text-dark p-5 text-center" style={{ backgroundColor: "white" }}>
+            <div className="text-dark text-center" style={{ backgroundColor: "white" }}>
                 <div className="container-fluid row d-flex">
 
                     <div className="align-items-center rounded py-3" style={{ backgroundColour: "white" }}>
@@ -30,7 +30,7 @@ function PrintRecipe(props) {
 
                 </div>
 
-                <div className="container-fluid">
+                <div className="container-fluid p-0">
 
 
                     <div className="col-lg-8 align-items-center rounded py-3 mx-auto" style={{ backgroundColour: "white" }}>
@@ -41,7 +41,7 @@ function PrintRecipe(props) {
 
                             <div className="container-fluid">
 
-                                <div className="container">
+                                <div className="container p-0">
                                     <img className="border img-fluid w-100"
                                         src={location.state.recipesImage}
                                         style={{
@@ -69,13 +69,13 @@ function PrintRecipe(props) {
                                 <div className="container-fluid border text-center border-top-0 rounded-bottom">
 
                                     <div className="row pt-2 fs-5 text-center">
-                                        <div className="col-4">
+                                        <div className="col-lg-4">
                                             Preperation Time: {location.state.recipesPrepTime}
                                         </div>
-                                        <div className="col-4 fw-bold">
+                                        <div className="col-lg-4 fw-bold">
                                             Difficulty: {location.state.recipesDifficulty}
                                         </div>
-                                        <div className="col-4">
+                                        <div className="col-lg-4">
                                             Cook Time: {location.state.recipesCookTime}
                                         </div>
                                     </div>
@@ -94,40 +94,41 @@ function PrintRecipe(props) {
                                     <div className="text-center fs-5 pt-2 pb-4 fw-bold text-decoration-underline">
                                         Nutritional values
                                     </div>
+                                    <div className="table-responsive-lg">
+                                        <table className="table table-striped table-hover border">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Serving</th>
+                                                    <th scope="col">Calories</th>
+                                                    <th scope="col">Fat</th>
+                                                    <th scope="col">Saturate</th>
+                                                    <th scope="col">Carbohydrates</th>
+                                                    <th scope="col">Sugars</th>
+                                                    <th scope="col">Fibre</th>
+                                                    <th scope="col">Protein</th>
+                                                    <th scope="col">Salt</th>
 
-                                    <table className="table table-striped table-hover border">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Serving</th>
-                                                <th scope="col">Calories</th>
-                                                <th scope="col">Fat</th>
-                                                <th scope="col">Saturate</th>
-                                                <th scope="col">Carbohydrates</th>
-                                                <th scope="col">Sugars</th>
-                                                <th scope="col">Fibre</th>
-                                                <th scope="col">Protein</th>
-                                                <th scope="col">Salt</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <tr>
-                                                <th>{location.state.recipesNutrition[0].measurementValue}</th>
-                                                <th>{location.state.recipesNutrition[1].measurementValue}</th>
-                                                <th>{location.state.recipesNutrition[2].measurementValue + location.state.recipesNutrition[2].units}</th>
-                                                <th>{location.state.recipesNutrition[3].measurementValue + location.state.recipesNutrition[3].units}</th>
-                                                <th>{location.state.recipesNutrition[4].measurementValue + location.state.recipesNutrition[4].units}</th>
-                                                <th>{location.state.recipesNutrition[5].measurementValue + location.state.recipesNutrition[5].units}</th>
-                                                <th>{location.state.recipesNutrition[6].measurementValue + location.state.recipesNutrition[6].units}</th>
-                                                <th>{location.state.recipesNutrition[7].measurementValue + location.state.recipesNutrition[7].units}</th>
-                                                <th>{location.state.recipesNutrition[8].measurementValue + location.state.recipesNutrition[8].units}</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>{location.state.recipesNutrition[0].measurementValue}</th>
+                                                    <th>{location.state.recipesNutrition[1].measurementValue}</th>
+                                                    <th>{location.state.recipesNutrition[2].measurementValue + location.state.recipesNutrition[2].units}</th>
+                                                    <th>{location.state.recipesNutrition[3].measurementValue + location.state.recipesNutrition[3].units}</th>
+                                                    <th>{location.state.recipesNutrition[4].measurementValue + location.state.recipesNutrition[4].units}</th>
+                                                    <th>{location.state.recipesNutrition[5].measurementValue + location.state.recipesNutrition[5].units}</th>
+                                                    <th>{location.state.recipesNutrition[6].measurementValue + location.state.recipesNutrition[6].units}</th>
+                                                    <th>{location.state.recipesNutrition[7].measurementValue + location.state.recipesNutrition[7].units}</th>
+                                                    <th>{location.state.recipesNutrition[8].measurementValue + location.state.recipesNutrition[8].units}</th>
+                                                </tr>
 
 
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
                                 </div>
 
@@ -165,32 +166,34 @@ function PrintRecipe(props) {
                                                 data-bs-parent="#accordionFlushIngredients">
 
                                                 <div className="accordion-body rounded">
-                                                    <table className="table table-striped table-hover border">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Ingredient</th>
-                                                                <th scope="col">Measurement</th>
+                                                    <div className="table-responsive-lg">
+                                                        <table className="table table-striped table-hover border">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Ingredient</th>
+                                                                    <th scope="col">Measurement</th>
 
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                          
-                                                            {location.state.recipesIngredients.map((ingredient, index) => (
-                                                                <tr key={index}>
-                                                                    <td>
-                                                                        {Capitalize(ingredient.ingredientName) == true ? `${Capitalize(ingredient.ingredientName)}` :
-                                                                            `${Capitalize(ingredient.ingredientName)}`}
-
-                                                                    </td>
-                                                                    <td>
-                                                                        {ingredient.measurementValue + ingredient.units}
-                                                                    </td>
                                                                 </tr>
+                                                            </thead>
+                                                            <tbody>
 
-                                                            ))}
+                                                                {location.state.recipesIngredients.map((ingredient, index) => (
+                                                                    <tr key={index}>
+                                                                        <td>
+                                                                            {Capitalize(ingredient.ingredientName) == true ? `${Capitalize(ingredient.ingredientName)}` :
+                                                                                `${Capitalize(ingredient.ingredientName)}`}
 
-                                                        </tbody>
-                                                    </table>
+                                                                        </td>
+                                                                        <td>
+                                                                            {ingredient.measurementValue + ingredient.units}
+                                                                        </td>
+                                                                    </tr>
+
+                                                                ))}
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
 
                                             </div>
