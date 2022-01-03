@@ -10,8 +10,8 @@ function Capitalize(str) {
 
 
 
-const authorAPI = `https://getbakingapitest2.free.beeceptor.com/authors`
-const recipesAPI = `https://getbakingapitest2.free.beeceptor.com/recipes`
+const authorAPI = `https://get-baking-recipes-api.free.beeceptor.com/authors`
+const recipesAPI = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 
 class Recipe extends React.Component {
 

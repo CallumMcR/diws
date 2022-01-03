@@ -12,7 +12,7 @@ import FilterButton from "./FilterButton.js";
 
 
 const recipesPerPage = 3;
-const apiURL = `https://getbakingapitest2.free.beeceptor.com/recipes`
+const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 
 
 function getRecipeTime(cooktime, preptime) {
