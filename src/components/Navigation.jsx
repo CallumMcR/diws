@@ -1,19 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { ReactComponent as Logo } from './getBakingLogo.svg';
 
 function Navigation() {
     return (
 
         <div className="navigation">
-            <nav className="navbar navbar-expand-lg navbar-dark shadow-sm py-4"
+            <nav className="navbar navbar-expand-lg navbar-dark shadow-sm"
                 style={{ backgroundColor: "#ff80c4" }}>
                 <div className="container-fluid justify-content-center">
-                    <div className="px-3">
+                    <a className="navbar-brand p-0 me-2">
+                        <Logo className="d-block my-1" style={{ wdith:"32px", height:"100px" }} />
+                    </a>
+
+                    <div className="px-5">
                         <button className="navbar-toggler" type="button"
                             data-bs-toggle="collapse" data-bs-target="#navMenu">
                             <span className="navbar-toggler-icon"></span>
                         </button>
-                        <a className="navbar-brand px-4">Get Baking!</a>
+
                     </div>
                     <div className="row align-middle">
 

@@ -493,7 +493,7 @@ class Recipe extends React.Component {
 
 
                             {(link.facebook !== 'undefined' && link.facebook !== null) &&
-                              <div className="col-4 align-items-center text-center">
+                              <div className="col-lg-4 align-items-center text-center">
                                 <button id="myFacebook" className="btn" style={{ color: "#ff80c4" }} name="facebook" onClick={() => window.open(link.facebook)}
                                 >
                                   <div className="bi bi-facebook"></div>
@@ -504,7 +504,7 @@ class Recipe extends React.Component {
                             }
 
                             {(link.instagram !== 'undefined' && link.instagram !== null) &&
-                              <div className="col-4">
+                              <div className="col-lg-4">
                                 <button id="myInstagram" className="btn" style={{ color: "#ff80c4" }} name="instagram" onClick={() => window.open(link.instagram)}
                                 >
                                   <div className="bi bi-instagram"></div>
@@ -514,7 +514,7 @@ class Recipe extends React.Component {
                             }
 
                             {(link.twitter !== 'undefined' && link.twitter !== null) &&
-                              <div className="col-4 align-items-center text-center">
+                              <div className="col-lg-4 align-items-center text-center">
                                 <button id="myTwitter" className="btn" style={{ color: "#ff80c4" }} name="twitter" onClick={() => window.open(link.twitter)}
                                 >
                                   <div className="bi bi-twitter"></div>
@@ -533,12 +533,12 @@ class Recipe extends React.Component {
                       <div className="col-lg-5 justify-content-around">
 
                         <div className="container-fluid row align-items-center d-flex">
-                          <div className="col-8">
+                          <div className="col-lg-8">
                             <div className="text-center">
                               Made by: <strong>{this.state.activeRecipe.author}</strong>
                             </div>
                           </div>
-                          <div className="col-3">
+                          <div className="col-lg-3">
                             <img src={this.state.activeAuthor.profileimage}
                               className="rounded-circle float-end img-fluid" alt="author"
                               style={{ width: "60px", height: "60px" }} />
