@@ -563,7 +563,7 @@ class Recipe extends React.Component {
             {/* Related Recipes display */}
 
 
-            <div className="col-lg-4 rounded" style={{ backgroundColour: "white" }}>
+            <div className="col-lg-4 border-start" style={{ backgroundColour: "white" }}>
 
 
               {this.state.relatedRecipes.map((recipe, index) => (
