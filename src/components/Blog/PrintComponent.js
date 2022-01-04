@@ -164,11 +164,11 @@ class ComponentToPrint extends React.Component {
                 </div>
 
                 <div className="container-fluid pt-2 text-dark fs-5 rounded-bottom">
-                  {this.state.listOfIngredients.map((ingredient, index) => (
+                  {this.state.listOfInstructions.map((instruction, index) => (
                     <div key={index} className="py-2">
                       Step {index + 1}:
                       <div className="pt-1">
-                        {ingredient.ingredientName}
+                        {instruction.step}
                       </div>
                     </div>
 
