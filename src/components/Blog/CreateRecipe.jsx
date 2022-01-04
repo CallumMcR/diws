@@ -94,7 +94,7 @@ function CreateRecipe() {
         setIngredients(values);
 
 
-        if (event.target.name == "units") {
+        if (event.target.name == "units" && ingredients[index].units !== "quantity") {
             var convert = require('convert-units');
 
             const listOfPossibilities = convert().from(ingredients[index].units).possibilities()
@@ -343,6 +343,7 @@ function CreateRecipe() {
                                                 <option value="ml">Milliliters</option>
                                                 <option value="l">Liters</option>
                                                 <option value="fl-oz">Teaspoons</option>
+                                                <option value ="quantity">Quantity</option>
                                             </Form.Select>
 
                                         </InputGroup>
