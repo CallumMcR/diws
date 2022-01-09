@@ -538,7 +538,7 @@ class Recipe extends React.Component {
                               Made by: <strong>{this.state.activeRecipe.author}</strong>
                             </div>
                           </div>
-                          <div className="col-lg-3">
+                          <div className="col-lg-3 justify-content-center d-flex">
                             <img src={this.state.activeAuthor.profileimage}
                               className="rounded-circle float-end img-fluid" alt="author"
                               style={{ width: "60px", height: "60px" }} />
