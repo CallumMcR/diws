@@ -268,7 +268,7 @@ class Recipes extends React.Component {
                     return (
 
 
-                      <div className="col-xl-4 d-flex py-2" key={recipe.id}>
+                      <div className="col-xl-4 d-flex py-2 justify-content-center" key={recipe.id}>
                         <Link style={{ textDecoration: 'none' }}
                           to={{
                             pathname: `recipe/${recipe.id}`,
