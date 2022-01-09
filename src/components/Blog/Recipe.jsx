@@ -590,28 +590,28 @@ class Recipe extends React.Component {
                         style={{ marginright: "0px", marginleft: "0px", paddingright: "0px", paddingleft: "0px" }}>
 
 
-                        <div className="col-xl-5">
+                        <div className="col-xl-5 d-flex justify-content-center">
                           <img src={`${recipe.thumbnail}`} className="float-start img-thumbnail"
                             alt="Thumbnail"
                             style={{ width: "150px", height: "150px", minwidth: "50px", minheight: "50px", padding: "0px" }} />
                         </div>
 
 
-                        <div className="col-7 text-start" style={{ paddingleft: "0px" }}>
-                          <div className="container py-1 text-start fw-bold text-dark" style={{ paddingleft: "12px", textDecoration: "none" }}>
+                        <div className="col-7 text-center" style={{ paddingleft: "0px" }}>
+                          <div className="container py-1 text-center fw-bold text-dark" style={{ paddingleft: "12px", textDecoration: "none" }}>
                             {recipe.name.length <= 15 ? `${recipe.name}` :
                               `${recipe.name.substring(0, 13)}...`}
                           </div>
-                          <div className="container py-1 text-start fw-light text-dark" style={{ paddingleft: "12px", textDecoration: "none" }}>
+                          <div className="container py-1 text-center fw-light text-dark" style={{ paddingleft: "12px", textDecoration: "none" }}>
                             {recipe.description.length <= 40 ? `${recipe.description}` :
                               `${recipe.description.substring(0, 36)}...`}
                           </div>
 
 
 
-                          <div className="row container-fluid rounded align-items-center"
+                          <div className="container-fluid rounded align-items-center"
                             style={{ paddingright: "0px" }}>
-                            <div className="col-md-7 text-start">
+                            <div className="text-center">
                               {recipe.author}
 
                             </div>
