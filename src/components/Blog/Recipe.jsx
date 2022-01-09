@@ -562,6 +562,10 @@ class Recipe extends React.Component {
 
             {/* Related Recipes display */}
 
+            <div className="d-lg-none text-center fw-bold fs-3 py-1">
+              Related Recipes
+              <hr></hr>
+            </div>
 
             <div className="col-lg-4 border-start" style={{ backgroundColour: "white" }}>
 
