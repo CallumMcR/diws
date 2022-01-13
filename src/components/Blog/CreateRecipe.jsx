@@ -3,9 +3,33 @@ import { render } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal, Button, InputGroup, FormControl, Form } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import moment from "moment";
 
 
 function CreateRecipe(props) {
+
+    function getRecipeTime(time) {
+        var timeHrs = moment(time, ["hmm", "mm", "h"]).format("HH");
+        var timeMins = moment(time, ["hmm", "mm", "h"]).format("mm");
+        var totalHours = parseInt(timeHrs);
+        var totalMinutes = parseInt(timeMins);
+        while (totalMinutes > 60)
+        {
+            totalMinutes -= 60;
+            totalHours += 1;
+        }
+        if (totalHours > 0) {
+            return (totalHours + "hrs "+totalMinutes+"mins");
+        }
+        else {
+            return (totalMinutes + "mins ");
+        }
+    }
+
+    function Capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
     let navigate = useNavigate();
     const location = useLocation();
     const [ingredients, setIngredients] = useState([
@@ -183,8 +207,7 @@ function CreateRecipe(props) {
         setDifficulty(location.state.data.difficulty);
 
         const arrayOfIngredients = [];
-        location.state.data.ingredients.map((ing, index) => {
-            console.log(index)
+        location.state.data.ingredients.map(ing => {
             var newUnit = ing.measurementtype;
             var number = ing.measurementweight;
             if (ing.measurementtype == null && ing.measurementsize !== null) {
@@ -195,16 +218,45 @@ function CreateRecipe(props) {
                 number = 1;
                 newUnit = "quantity";
             }
-
-            console.log(index + " " + ing.ingredient + " " + number + " " + newUnit);
-
-
             arrayOfIngredients.push(
-                { ingredientName: ing.ingredient, measurementValue: number, units: newUnit, prevUnits: "g" })
+                { ingredientName: Capitalize(ing.ingredient), measurementValue: number, units: newUnit, prevUnits: "g" })
 
         })
-        console.log(arrayOfIngredients)
         setIngredients(arrayOfIngredients)
+
+        const arrayOfInstructions = [];
+        location.state.data.instructions[0].steps.map(step => {
+            arrayOfInstructions.push(
+                { step: step })
+
+        })
+        setInstructions(arrayOfInstructions);
+
+        const fatValue = parseFloat(location.state.data.nutrition[0].fat)
+        const saturatesValue = parseFloat(location.state.data.nutrition[0].saturates)
+        const carbsValue = parseFloat(location.state.data.nutrition[0].carbs)
+        const sugarsValue = parseFloat(location.state.data.nutrition[0].sugars)
+        const fibreValue = parseFloat(location.state.data.nutrition[0].fibre)
+        const proteinValue = parseFloat(location.state.data.nutrition[0].protein)
+        const saltValue = parseFloat(location.state.data.nutrition[0].salt)
+        setNutritonialValues([
+            { nutritionName: "Servings", measurementValue: location.state.data.nutrition[0].serving, units: "g", prevUnits: "g" },
+            { nutritionName: "Kcal", measurementValue: location.state.data.nutrition[0].kcal, units: "g", prevUnits: "g" },
+            { nutritionName: "Fat", measurementValue: fatValue, units: "g", prevUnits: "g" },
+            { nutritionName: "Saturates", measurementValue: saturatesValue, units: "g", prevUnits: "g" },
+            { nutritionName: "Carbs", measurementValue: carbsValue, units: "g", prevUnits: "g" },
+            { nutritionName: "Sugars", measurementValue: sugarsValue, units: "g", prevUnits: "g" },
+            { nutritionName: "Fibre", measurementValue: fibreValue, units: "g", prevUnits: "g" },
+            { nutritionName: "Protein", measurementValue: proteinValue, units: "g", prevUnits: "g" },
+            { nutritionName: "Salt", measurementValue: saltValue, units: "g", prevUnits: "g" },
+        ]);
+
+        setBackgroundImage(location.state.data.thumbnail);
+        var parsedCookTime= getRecipeTime(location.state.data.cooktime)
+        var parsedPrepTime = getRecipeTime(location.state.data.preptime)
+        setCookTime(parsedCookTime);
+        setPrepTime(parsedPrepTime);
+
 
 
     }, []);
@@ -326,24 +378,6 @@ function CreateRecipe(props) {
                         </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         <div className="pt-3">
 
                             {ingredients.map((ingredient, index) => (
@@ -424,28 +458,6 @@ function CreateRecipe(props) {
 
                         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         {instructions.map((step, index) => (
                             <div className="row align-items-center d-flex py-2" key={index}>
                                 <div className="py-2 fs-5 fw-bold text-start">
@@ -499,11 +511,6 @@ function CreateRecipe(props) {
 
                                 <div className="fs-5 fw-bold pb-4 text-decoration-underline text-start">{nutrientType.nutritionName}</div>
                                 <InputGroup>
-                                    {index == 0 &&
-                                        <InputGroup.Text
-                                        >Number
-                                        </InputGroup.Text>
-                                    }
                                     {index == 1 &&
                                         <InputGroup.Text
                                         >Kcal
@@ -511,7 +518,7 @@ function CreateRecipe(props) {
                                     }
 
                                     <FormControl placeholder={nutrientType.nutritionName}
-                                        style={{ borderColor: "#ff80c4" }} type="number"
+                                        style={{ borderColor: "#ff80c4" }} type={index == 0 ? "text" : "number"}
                                         name="measurementValue"
                                         onChange={(event) => handleNutritionalChangeInput(index, event, nutrientType.units, nutrientType.measurementValue)}
                                         value={nutrientType.measurementValue} />
