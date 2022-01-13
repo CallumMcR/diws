@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal, Button, InputGroup, FormControl, Form } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 
-function CreateRecipe() {
+function CreateRecipe(props) {
     let navigate = useNavigate();
+    const location = useLocation();
     const [ingredients, setIngredients] = useState([
         { ingredientName: "", measurementValue: "0", units: "g", prevUnits: "g" },
     ]);
@@ -13,6 +15,9 @@ function CreateRecipe() {
     const [instructions, setInstructions] = useState([
         { step: "" },
     ]);
+
+    const [recipeName, setRecipeName] = useState("");
+    const [recipeYield, setRecipeYield] = useState("1");
 
     const [nutrition, setNutritonialValues] = useState([
         { nutritionName: "Servings", measurementValue: "0", units: "g", prevUnits: "g" },
@@ -27,9 +32,9 @@ function CreateRecipe() {
     ]);
     const [description, setDescription] = useState();
     const [backgroundImage, setBackgroundImage] = useState(`https://i.gyazo.com/855e8ca01684f0d61e302ba09a177bfd.png`);
-    const [prepTime,setPrepTime]= useState(0);
-    const [cookTime,setCookTime]= useState(0);
-    const [difficulty,setDifficulty]=useState("N/A");
+    const [prepTime, setPrepTime] = useState(0);
+    const [cookTime, setCookTime] = useState(0);
+    const [difficulty, setDifficulty] = useState("N/A");
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -42,8 +47,8 @@ function CreateRecipe() {
         navigate('/recipes/recipe/print/',
             {
                 state: {
-                    recipesName: data.target.elements.recipeName.value,
-                    recipesYield: data.target.elements.recipeYield.value,
+                    recipesName: recipeName,
+                    recipesYield: recipeYield,
                     recipesIngredients: newIngredients,
                     recipesSteps: newInstructions,
                     recipesNutrition: nutrition,
@@ -117,9 +122,9 @@ function CreateRecipe() {
     }
 
 
-    const handleAddStep = () => {
+    const handleAddStep = (val) => {
         setInstructions([...instructions,
-        { step: "" },])
+        { step: val },])
     }
     const handleRemoveStep = (index) => {
         const values = [...instructions];
@@ -169,11 +174,46 @@ function CreateRecipe() {
     }
 
 
+
+    useEffect(() => {
+        console.log(location.state.data);
+        setRecipeName(location.state.data.name);
+        setRecipeYield(location.state.data.yield);
+        setDescription(location.state.data.description);
+        setDifficulty(location.state.data.difficulty);
+
+        const arrayOfIngredients = [];
+        location.state.data.ingredients.map((ing, index) => {
+            console.log(index)
+            var newUnit = ing.measurementtype;
+            var number = ing.measurementweight;
+            if (ing.measurementtype == null && ing.measurementsize !== null) {
+                number = 1;
+                newUnit = "quantity";
+            }
+            else if (ing.measurementtype == null && ing.measurementsize == null && ing.measurementweight == null) {
+                number = 1;
+                newUnit = "quantity";
+            }
+
+            console.log(index + " " + ing.ingredient + " " + number + " " + newUnit);
+
+
+            arrayOfIngredients.push(
+                { ingredientName: ing.ingredient, measurementValue: number, units: newUnit, prevUnits: "g" })
+
+        })
+        console.log(arrayOfIngredients)
+        setIngredients(arrayOfIngredients)
+
+
+    }, []);
+
+
     return (
         <div style={{ overflow: "hidden" }}>
             <div className="row">
                 <div className="col-lg-3">
-
                 </div>
                 <div className="col-lg-6 text-center">
 
@@ -247,30 +287,32 @@ function CreateRecipe() {
 
 
                         <div className="pt-3">
-                            <input placeholder="Recipe Name" style={{ borderColor: "#ff80c4" }} className="form-control" name="recipeName" id="recipeName" type="text" />
-
+                            <input placeholder="Recipe Name" style={{ borderColor: "#ff80c4" }} className="form-control"
+                                onChange={(e) => { setRecipeName(e.target.value); }} value={recipeName}
+                                name="recipeName" id="recipeName" type="text" />
                         </div>
 
 
                         <div className="pt-3">
-                            <input placeholder="Recipe Yield" style={{ borderColor: "#ff80c4" }} type="text" className="form-control" name="recipeYield" id="recipeYield" />
+                            <input placeholder="Recipe Yield" style={{ borderColor: "#ff80c4" }} type="text" className="form-control"
+                                onChange={(e) => { setRecipeYield(e.target.value); }} name="recipeYield" id="recipeYield" value={recipeYield} />
                         </div>
 
                         <div className="pt-3 row">
                             <div className="col-4">
-                                <input placeholder="Preparation Time" style={{ borderColor: "#ff80c4" }} type="text" className="form-control" name="recipePrepTime" id="recipePrepTime" 
-                                onChange={(e) => { setPrepTime(e.target.value); }}/>
+                                <input placeholder="Preparation Time" style={{ borderColor: "#ff80c4" }} type="text" className="form-control" name="recipePrepTime" id="recipePrepTime"
+                                    onChange={(e) => { setPrepTime(e.target.value); }} value={prepTime} />
                             </div>
 
                             <div className="col-4">
                                 <input placeholder="Cook Time" style={{ borderColor: "#ff80c4" }}
                                     type="text" className="form-control" name="recipeCookTime"
-                                    id="recipeCookTime" 
-                                    onChange={(e) => { setCookTime(e.target.value); }}/>
+                                    id="recipeCookTime"
+                                    onChange={(e) => { setCookTime(e.target.value); }} value={cookTime} />
                             </div>
                             <div className="col-4">
-                                <input placeholder="Difficulty" style={{ borderColor: "#ff80c4" }} type="text" className="form-control" name="recipeDifficulty" id="recipeDifficulty" 
-                                onChange={(e) => { setDifficulty(e.target.value); }}/>
+                                <input placeholder="Difficulty" style={{ borderColor: "#ff80c4" }} type="text" className="form-control" name="recipeDifficulty" id="recipeDifficulty"
+                                    onChange={(e) => { setDifficulty(e.target.value); }} value={difficulty} />
                             </div>
                         </div>
 
@@ -279,7 +321,7 @@ function CreateRecipe() {
                             <textarea placeholder="Please describe your recipe..."
                                 style={{ borderColor: "#ff80c4" }} type="text" className="form-control"
                                 name='recipeDescription' id="recipeDescription" rows="12"
-                                onChange={(e) => { setDescription(e.target.value); }}>
+                                onChange={(e) => { setDescription(e.target.value); }} value={description}>
                             </textarea>
                         </div>
 
@@ -305,7 +347,7 @@ function CreateRecipe() {
                         <div className="pt-3">
 
                             {ingredients.map((ingredient, index) => (
-                                
+
                                 <div className="row align-items-center d-flex py-2" key={index}>
 
                                     <div className="col-lg-3">
@@ -319,7 +361,6 @@ function CreateRecipe() {
                                             style={{ borderColor: "#ff80c4" }}
                                             onChange={(event) => handleChangeInput(index, event)}>
                                         </input>
-                                        {console.log(ingredients)}
 
                                     </div>
                                     <div className="col-lg-6">
@@ -334,6 +375,7 @@ function CreateRecipe() {
 
                                             <Form.Select aria-label="Measurements"
                                                 onChange={(event) => handleChangeInput(index, event, ingredient.units, ingredient.measurementValue)}
+                                                value={ingredient.units}
                                                 name="units"
                                                 style={{ borderColor: "#ff80c4" }}>
                                                 <option value="g">Grams</option>
@@ -343,7 +385,7 @@ function CreateRecipe() {
                                                 <option value="ml">Milliliters</option>
                                                 <option value="l">Liters</option>
                                                 <option value="fl-oz">Teaspoons</option>
-                                                <option value ="quantity">Quantity</option>
+                                                <option value="quantity">Quantity</option>
                                             </Form.Select>
 
                                         </InputGroup>
@@ -421,7 +463,7 @@ function CreateRecipe() {
                                         onChange={(event) => handleChangeInstruction(index, event)}>
                                     </input>
 
-                                    {console.log(instructions)}
+
                                 </div>
 
                                 <div className="col-lg-3">
@@ -439,7 +481,7 @@ function CreateRecipe() {
                                         <div className="col-6">
                                             <Button className="bi bi-plus-lg
                                         rounded-circle"variant="primary"
-                                                onClick={() => handleAddStep()}>
+                                                onClick={() => handleAddStep("")}>
 
                                             </Button>
                                         </div>

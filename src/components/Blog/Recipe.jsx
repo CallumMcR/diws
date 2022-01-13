@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { Carousel } from "react-bootstrap";
+import { Carousel, Button } from "react-bootstrap";
 import moment from "moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+
 
 function Capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -26,7 +27,8 @@ class Recipe extends React.Component {
     listOfNutrients: [],
     activeAuthor: [],
     socialMediaLinks: [],
-    relatedRecipes: []
+    relatedRecipes: [],
+    finished: false,
   }
 
 
@@ -145,9 +147,12 @@ class Recipe extends React.Component {
     this.setState({ listOfImages: this.state.activeRecipe.images });
     this.setState({ listOfNutrients: this.state.activeRecipe.nutrition });
 
+
+
   }
-
-
+  async handleSubmit(event) {
+    this.setState({ finished: true });
+  }
 
   render() {
     return (
@@ -555,6 +560,19 @@ class Recipe extends React.Component {
                 </div>
 
               </div>
+              <Button onClick={event => this.handleSubmit(event)}>
+                Personalise Recipe
+              </Button>
+
+              {this.state.finished == true && (
+                <Navigate to="/recipes/CreateRecipe/"
+                  state={
+                    {
+                      data: this.state.activeRecipe
+                    }
+                  } />
+              )}
+
 
 
 
