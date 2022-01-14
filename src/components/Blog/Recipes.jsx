@@ -7,10 +7,6 @@ import Pagination from "./Pagination.js";
 import FilterButton from "./FilterButton.js";
 
 
-
-
-
-
 const recipesPerPage = 3;
 const apiURL = `https://get-baking-recipes-api.free.beeceptor.com/recipes`
 

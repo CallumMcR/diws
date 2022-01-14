@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from './getBakingLogo.svg';
-
+import { Button } from "react-bootstrap";
 function Navigation() {
     return (
 
@@ -59,17 +59,17 @@ function Navigation() {
                             <div className="collapse navbar-collapse align-middle h-100 d-flex align-items-center justify-content-center">
                                 <ul className="navbar-nav h-100 d-flex align-items-center">
                                     <li className="nav-item h-100 d-flex align-items-center">
-                                        <NavLink to="www.google.com" className="btn" style={{ color: "white" }}>
+                                        <Button onClick={() => window.open("https://en-gb.facebook.com/")} style={{ color: "white", background:"none",border:"none" }}>
                                             <span><i className="bi bi-facebook"></i></span>
-                                        </NavLink>
+                                        </Button>
 
-                                        <NavLink to="www.google.com" className="btn" style={{ color: "white" }}>
+                                        <Button onClick={() => window.open("https://twitter.com/")} className="btn" style={{ color: "white", background:"none",border:"none" }}>
                                             <span><i className="bi bi-twitter"></i></span>
-                                        </NavLink>
+                                        </Button>
 
-                                        <NavLink to="www.google.com" className="btn" style={{ color: "white" }}>
+                                        <Button onClick={() => window.open("https://www.pinterest.co.uk/")} className="btn" style={{ color: "white", background:"none",border:"none" }}>
                                             <span><i className="bi bi-pinterest"></i></span>
-                                        </NavLink>
+                                        </Button>
                                     </li>
                                 </ul>
 

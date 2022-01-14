@@ -162,9 +162,25 @@ class Recipe extends React.Component {
           <div className="container-fluid row d-flex">
 
             <div className="col-lg-8 align-items-center rounded py-3" style={{ backgroundColour: "white" }}>
-              <h1>
-                {this.state.activeRecipe.name}
-              </h1>
+              <div className="container-fluid position-relative">
+                <h1>
+                  <Button className="bi bi-pencil-square align-items-center d-inline"
+                    style={{ position: "absolute", left: "5%",top: "50%", msTransform: "translateY(-50%)", transform: "translateY(-50%)"}}
+                     onClick={event => this.handleSubmit(event)}
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Personalise Recipe"></Button>
+                  {this.state.activeRecipe.name}
+                </h1>
+              </div>
+
+
+              {this.state.finished == true && (
+                <Navigate to="/recipes/CreateRecipe/"
+                  state={
+                    {
+                      data: this.state.activeRecipe
+                    }
+                  } />
+              )}
             </div>
 
             <div className="col-4 rounded py-3 d-none d-lg-block" style={{ backgroundColour: "white" }}>
@@ -560,18 +576,7 @@ class Recipe extends React.Component {
                 </div>
 
               </div>
-              <Button onClick={event => this.handleSubmit(event)}>
-                Personalise Recipe
-              </Button>
 
-              {this.state.finished == true && (
-                <Navigate to="/recipes/CreateRecipe/"
-                  state={
-                    {
-                      data: this.state.activeRecipe
-                    }
-                  } />
-              )}
 
 
 
