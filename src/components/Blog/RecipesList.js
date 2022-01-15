@@ -1,5 +1,4 @@
 import React from 'react';
-// What we will put in main file <RecipesList listOfRecipes={this.state.recipes} searchedRecipe={this.searchedRecipe}/>
 const RecipesList = props => (
     <div>
         {(props.listOfRecipes).recipes.map((recipe) => {
